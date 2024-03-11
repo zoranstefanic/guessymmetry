@@ -1,0 +1,14 @@
+#!/bin/bash
+export TMPDIR=/home/huk/apps/guessymmetry/tmp
+export LD_LIBRARY_PATH=/usr/sqlite330/lib
+mkdir -p /home/huk/apps/guessymmetry/tmp
+PIDFILE="/home/huk/apps/guessymmetry/tmp/uwsgi.pid"
+
+if [ -e "$PIDFILE" ] && (pgrep -u huk | grep -x -f $PIDFILE &> /dev/null); then
+  echo "uWSGI for guessymmetry already running."
+  exit 99
+fi
+
+/home/huk/apps/guessymmetry/env/bin/uwsgi --ini /home/huk/apps/guessymmetry/uwsgi.ini
+
+echo "Started uWSGI for guessymmetry."

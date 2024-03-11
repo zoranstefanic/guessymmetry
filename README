@@ -1,0 +1,46 @@
+# Opalstack Django README
+#
+# Renamed directories
+# myproject --> gsy
+# myproject/myproject --> gsy/project
+# and accordingly in start and stop scripts and in py files.
+
+## Post-install steps
+
+Please take the following steps before you begin to use your Django
+installation:
+
+1. Connect your Django application to a site route in the control panel.
+
+2. Edit /home/huk/apps/guessymmetry/myproject/myproject/settings.py to set ALLOWED_HOSTS
+   to include your site's domains. Example:
+
+       ALLOWED_HOSTS = ['domain.com', 'www.domain.com']
+
+3. Run the following commands to restart your Django instance:
+
+   /home/huk/apps/guessymmetry/stop
+   /home/huk/apps/guessymmetry/start
+
+## Using your own project
+
+If you want to serve your own Django project from this instance:
+
+1. Upload your project directory to /home/huk/apps/guessymmetry
+
+2. Activate the app's environment:
+
+       source /home/huk/apps/guessymmetry/env/bin/activate
+
+3. Install your project's Python dependencies with pip.
+
+4. Edit /home/huk/apps/guessymmetry/uwsgi.ini to point `wsgi-file` and `touch-reload` at your project's WSGI handler
+
+5. Run the following commands to restart your Django instance:
+
+   /home/huk/apps/guessymmetry/stop
+   /home/huk/apps/guessymmetry/start
+
+## More info
+
+See https://docs.opalstack.com/topic-guides/django/ for more information.
