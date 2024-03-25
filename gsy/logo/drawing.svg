@@ -23,92 +23,161 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="4.7415953"
-     inkscape:cx="331.53399"
-     inkscape:cy="138.98276"
-     inkscape:window-width="1920"
-     inkscape:window-height="1016"
+     inkscape:zoom="6.5572124"
+     inkscape:cx="321.78308"
+     inkscape:cy="92.493572"
+     inkscape:window-width="2560"
+     inkscape:window-height="1384"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
   <defs
-     id="defs1" />
+     id="defs1">
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect10"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect9"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect7"
+       is_visible="true"
+       lpeversion="1" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect5"
+       is_visible="true"
+       lpeversion="1" />
+  </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
     <text
-       style="font-size:13.2536px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#0044aa;stroke-width:0.521793;paint-order:markers stroke fill"
-       x="39.015404"
-       y="39.83371"
-       id="text15"
-       transform="scale(0.95823328,1.0435872)">G</text>
+       style="font-size:13.2536px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;opacity:0.76;fill:#2c5aa0;stroke-width:0.521793;paint-order:markers stroke fill"
+       x="36.230095"
+       y="28.036602"
+       id="text36"
+       transform="scale(0.95823329,1.0435872)">G</text>
     <text
-       style="font-size:13.3932px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#0044aa;stroke-width:0.527292;paint-order:markers stroke fill"
-       x="47.723785"
-       y="39.401047"
-       id="text14"
+       style="font-size:13.3932px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;opacity:0.76;fill:#2c5aa0;stroke-width:0.527292;paint-order:markers stroke fill"
+       x="44.412018"
+       y="27.726957"
+       id="text37"
        transform="scale(0.94824094,1.0545843)">U</text>
     <text
-       style="font-size:13.5374px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#0044aa;stroke-width:0.532968;paint-order:markers stroke fill"
-       x="56.569874"
-       y="39.180187"
-       id="text13"
+       style="font-size:13.5374px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;opacity:0.76;fill:#2c5aa0;stroke-width:0.532968;paint-order:markers stroke fill"
+       x="52.720005"
+       y="27.630426"
+       id="text38"
        transform="scale(0.93814227,1.0659364)">E</text>
     <text
-       style="font-size:13.2444px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#0044aa;stroke-width:0.521433;paint-order:markers stroke fill"
-       x="63.232689"
-       y="39.848259"
-       id="text12"
+       style="font-size:13.2444px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;opacity:0.76;fill:#2c5aa0;stroke-width:0.521433;paint-order:markers stroke fill"
+       x="58.974564"
+       y="28.042994"
+       id="text39"
        transform="scale(0.95889569,1.0428663)">S</text>
     <text
-       style="font-size:13.2444px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#0044aa;stroke-width:0.521433;paint-order:markers stroke fill"
-       x="70.014771"
-       y="39.848259"
-       id="text11"
+       style="font-size:13.2444px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;opacity:0.76;fill:#2c5aa0;stroke-width:0.521433;paint-order:markers stroke fill"
+       x="65.933075"
+       y="28.042995"
+       id="text40"
        transform="scale(0.95889569,1.0428663)">S</text>
     <text
-       style="font-size:13.5374px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#80b3ff;stroke-width:0.532968;paint-order:markers stroke fill"
-       x="89.417526"
-       y="39.180187"
-       id="text9"
+       style="font-size:13.5374px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;opacity:0.76;fill:#2c5aa0;stroke-width:0.532968;paint-order:markers stroke fill"
+       x="86.671768"
+       y="27.630426"
+       id="text41"
        transform="scale(0.93814227,1.0659364)"
        inkscape:transform-center-x="-0.37576157"
        inkscape:transform-center-y="2.257454">M</text>
     <text
-       style="font-size:13.5374px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#80b3ff;stroke-width:0.532968;paint-order:markers stroke fill"
-       x="100.68753"
-       y="39.180187"
-       id="text8"
+       style="font-size:13.5374px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;opacity:0.76;fill:#2c5aa0;stroke-width:0.532968;paint-order:markers stroke fill"
+       x="97.439316"
+       y="27.630426"
+       id="text42"
        transform="scale(0.93814227,1.0659364)">M</text>
     <text
-       style="font-size:13.5374px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#80b3ff;stroke-width:0.532968;paint-order:markers stroke fill"
-       x="111.70032"
-       y="39.180187"
-       id="text7"
+       style="font-size:13.5374px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;opacity:0.76;fill:#2c5aa0;stroke-width:0.532968;paint-order:markers stroke fill"
+       x="107.94965"
+       y="27.630426"
+       id="text43"
        transform="scale(0.93814227,1.0659364)">E</text>
     <text
-       style="font-size:13.5374px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#80b3ff;stroke-width:0.532968;paint-order:markers stroke fill"
-       x="119.42805"
-       y="39.180187"
-       id="text6"
+       style="font-size:13.5374px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;opacity:0.76;fill:#2c5aa0;stroke-width:0.532968;paint-order:markers stroke fill"
+       x="115.73897"
+       y="27.630426"
+       id="text44"
        transform="scale(0.93814227,1.0659364)">T</text>
     <text
-       style="font-size:13.4695px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;fill:#80b3ff;stroke-width:0.530296;paint-order:markers stroke fill"
-       x="126.33875"
-       y="39.377571"
-       id="text5"
+       style="font-size:13.4695px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;opacity:0.76;fill:#2c5aa0;stroke-width:0.530296;paint-order:markers stroke fill"
+       x="122.16827"
+       y="27.769623"
+       id="text45"
        transform="scale(0.94286848,1.0605933)">R</text>
-    <path
-       id="path17"
-       style="fill:#ff0066;stroke:none;stroke-width:0.143503;paint-order:markers stroke fill"
-       inkscape:transform-center-y="1.2322353"
-       d="m 74.91365,31.764967 a 1.1608313,1.2431107 0 0 0 -1.16078,1.243209 1.1608313,1.2431107 0 0 0 1.16078,1.243056 1.1608313,1.2431107 0 0 0 0.811358,-0.358381 c 0.988905,0.727576 2.547428,1.668096 2.690473,1.93342 0.144008,0.267111 0.123875,2.206971 0.220003,3.487737 a 1.1608313,1.2431107 0 0 0 -0.88689,1.205146 1.1608313,1.2431107 0 0 0 1.160923,1.243056 1.1608313,1.2431107 0 0 0 1.160782,-1.243056 1.1608313,1.2431107 0 0 0 -0.886747,-1.207908 c 0.09589,-1.280799 0.07594,-3.218055 0.219862,-3.484975 0.143043,-0.265324 1.701567,-1.205844 2.690473,-1.93342 a 1.1608313,1.2431107 0 0 0 0.811357,0.358381 1.1608313,1.2431107 0 0 0 1.160923,-1.243056 1.1608313,1.2431107 0 0 0 -1.160923,-1.243209 1.1608313,1.2431107 0 0 0 -1.160779,1.243209 1.1608313,1.2431107 0 0 0 0.05788,0.38125 c -1.081995,0.55472 -2.608149,1.520552 -2.892849,1.520553 -0.284699,0 -1.810854,-0.965833 -2.892847,-1.520553 a 1.1608313,1.2431107 0 0 0 0.05788,-0.38125 1.1608313,1.2431107 0 0 0 -1.160922,-1.243209 z" />
-    <path
-       id="path33"
-       style="fill:#c83771;stroke:none;stroke-width:0.143503;paint-order:markers stroke fill"
-       inkscape:transform-center-y="1.2322353"
-       d="m 128.18321,31.764967 a 1.1608313,1.2431107 0 0 0 -1.16078,1.243209 1.1608313,1.2431107 0 0 0 1.16078,1.243056 1.1608313,1.2431107 0 0 0 0.81136,-0.358381 c 0.98891,0.727576 2.54743,1.668096 2.69048,1.93342 0.144,0.267111 0.12387,2.206971 0.22,3.487737 a 1.1608313,1.2431107 0 0 0 -0.88689,1.205146 1.1608313,1.2431107 0 0 0 1.16092,1.243056 1.1608313,1.2431107 0 0 0 1.16078,-1.243056 1.1608313,1.2431107 0 0 0 -0.88674,-1.207908 c 0.0959,-1.280799 0.0759,-3.218055 0.21986,-3.484975 0.14304,-0.265324 1.70157,-1.205844 2.69047,-1.93342 a 1.1608313,1.2431107 0 0 0 0.81136,0.358381 1.1608313,1.2431107 0 0 0 1.16092,-1.243056 1.1608313,1.2431107 0 0 0 -1.16092,-1.243209 1.1608313,1.2431107 0 0 0 -1.16078,1.243209 1.1608313,1.2431107 0 0 0 0.0579,0.38125 c -1.082,0.55472 -2.60815,1.520552 -2.89285,1.520553 -0.2847,0 -1.81085,-0.965833 -2.89285,-1.520553 a 1.1608313,1.2431107 0 0 0 0.0579,-0.38125 1.1608313,1.2431107 0 0 0 -1.16092,-1.243209 z" />
+    <g
+       id="g48"
+       transform="matrix(-1.204536,0,0,1.204536,189.43157,5.991632)"
+       style="opacity:0.76">
+      <path
+         id="path46"
+         style="color:#000000;fill:#b3b3b3;stroke-width:2.07383;-inkscape-stroke:none"
+         inkscape:transform-center-x="1.7320435"
+         inkscape:transform-center-y="-0.99999551"
+         d="m 46.759937,11.892814 -0.500228,0.866097 3.214274,1.855701 v 3.711401 h 0.999939 v -3.711401 l 3.214274,-1.855701 -0.500228,-0.866097 -3.213757,1.855701 z" />
+      <circle
+         style="fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:0.0147271;stroke-linecap:round;stroke-dasharray:none;paint-order:markers stroke fill"
+         id="circle46"
+         cx="49.973953"
+         cy="18.326014"
+         r="1.1509006" />
+      <circle
+         style="fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:0.0147271;stroke-linecap:round;stroke-dasharray:none;paint-order:markers stroke fill"
+         id="circle47"
+         cx="53.438084"
+         cy="12.325863"
+         r="1.1509006" />
+      <circle
+         style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.0147271;stroke-linecap:round;stroke-dasharray:none;paint-order:markers stroke fill"
+         id="circle48"
+         cx="46.509823"
+         cy="12.325863"
+         r="1.1509006" />
+    </g>
+    <g
+       id="g13"
+       transform="matrix(1.204536,0,0,1.204536,15.678068,5.991632)"
+       style="opacity:0.76">
+      <path
+         id="path10"
+         style="color:#000000;fill:#b3b3b3;stroke-width:2.07383;-inkscape-stroke:none"
+         inkscape:transform-center-x="1.7320435"
+         inkscape:transform-center-y="-0.99999551"
+         d="m 46.759937,11.892814 -0.500228,0.866097 3.214274,1.855701 v 3.711401 h 0.999939 v -3.711401 l 3.214274,-1.855701 -0.500228,-0.866097 -3.213757,1.855701 z" />
+      <circle
+         style="fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:0.0147271;stroke-linecap:round;stroke-dasharray:none;paint-order:markers stroke fill"
+         id="circle13"
+         cx="49.973953"
+         cy="18.326014"
+         r="1.1509006" />
+      <circle
+         style="fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:0.0147271;stroke-linecap:round;stroke-dasharray:none;paint-order:markers stroke fill"
+         id="circle12"
+         cx="53.438084"
+         cy="12.325863"
+         r="1.1509006" />
+      <circle
+         style="fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:0.0147271;stroke-linecap:round;stroke-dasharray:none;paint-order:markers stroke fill"
+         id="path12"
+         cx="46.509823"
+         cy="12.325863"
+         r="1.1509006" />
+    </g>
   </g>
 </svg>
