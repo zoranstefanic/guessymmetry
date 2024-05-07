@@ -1,0 +1,54 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}Scoreboard{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/planegroups.js"></script>
+<script type="text/javascript" src="/static/js/task1_calc.js"></script>
+{% endblock %}
+
+{% block body_base %}
+<div class="container">
+        <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            <a href="{% url 'scoreboard' %}"><h1 style="color:#3c3;text-align:center;"><i class="fa fa-trophy"></i> Hall of fame</h1></a>
+            <a href="{% url 'scoreboard_htcc5' %}"><h1 style="color:#7c3;text-align:center;"><i class="fa fa-trophy"></i> HTCC5 Scoreboard</h1></a>
+            <a class="pull-right" href="{%url 'task1replay'%}"><button class="btn btn-lg btn-danger">Play again</button></a>
+            <a class="pull-right" href="{%url 'task1'%}"><button class="btn btn-lg btn-warning">Practice some more <i class="fa fa-smile-o"></i></button></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th><i class="fa fa-user fa-2x"></i> User</th>
+                        <th><i class="fa fa-hourglass-end fa-2x"></i> Time</th>
+                        <th><i class="fa fa-thumbs-o-down fa-2x"></i> Wrong answers</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for task in tasks %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{task.user.get_full_name}}</td>
+                        <td>{{task.duration}}</td>
+                        <td>{{task.wrong}}</td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+</div>
+{% endblock %}

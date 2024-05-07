@@ -1,0 +1,29 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}HTCC5-names{% endblock %}
+
+{% block body_base %}
+        <div class="container">
+        <h1>HTCC5 participants</h1>
+        <table class="table table-striped" >
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>First name</th>
+                    <th>Last name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td><b>{{u.username}}</b></td>
+                    <td>{{u.first_name}}</td>
+                    <td>{{u.last_name}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+{% endblock %}

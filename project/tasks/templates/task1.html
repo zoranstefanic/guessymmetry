@@ -1,0 +1,145 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}Guess the group (practice){% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/planegroups.js"></script>
+<script type="text/javascript" src="/static/js/task1_calc.js"></script>
+{% endblock %}
+
+{% block body_base %}
+<div class="container">
+    <div class="container">
+        <div id="right_answer" class="hidden">{{group}}</div>
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Guess the group (practice)</h1>
+                <p>In this challenge you need to recognize the symmetry of the 2D pattern, in other words to indicate to which plane group the pattern belongs. 
+                <ul class="list-unstyled">
+                    <li>Click anywhere on the drawing canvas below and the circles will appear in the symmetry positions of that point. </li>
+                    <li>You may drag the circles around to more easily recognize the symmetry.</li>
+                    <li>When you think you have practiced enough click on "Play for real!"</li>
+                    <li><a href="{%url 'task1'%}"><button class="btn btn-warning btn-lg">Reload</button></a><a class="pull-right" href="{%url 'task1replay'%}"><button class="btn btn-danger btn-lg">Play for real!</button></a></li>
+                </ul>
+                </p>
+            </div>
+            <div class="col-md-4" style="margin-top:20px;">
+                <button id="what_answer" class="btn btn-info">What is the answer?</button>
+                <div id="click_result"></div>
+                <div id="answer"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="btn-group">
+                    {% for pg in plane_groups %}
+                        <button class="btn btn-info click_answer" type="button" id="{{pg}}"><h4><a href="">{{pg}}</a></h4></button>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><svg class="svg"></svg></div>
+        </div>
+    </div>
+</div>
+
+<script>
+var plane_group = "{{group}}";
+var cell = getCell(plane_group);
+var a = cell[0], b = cell[1], gamma = cell[2];
+var gammar = (gamma/180)*Math.PI;
+//console.log(plane_group);
+//console.log([a,b,gamma]);
+
+var svg = d3.select('svg');
+
+//Dragging part
+var drag = d3.drag()
+    //.subject(function(d) { return {x: d[0], y: d[1]}; })
+    .on("start", dragstart)
+    .on("drag", dragged)
+    .on("end", dragended);
+
+function dragstart(d) {
+  d3.select(this).classed("dragged", true);
+}
+
+function dragged(d) {
+  d3.select(this).attr("cx",d3.event.x).attr("cy", d3.event.y);
+  var group = d3.select(this.parentNode).selectAll('circle');
+
+  var p = [d3.mouse(this)[0], d3.mouse(this)[1]];
+  var x = toFractional(p)[0], y = toFractional(p)[1];
+  var new_positions = draw_symmetry([x,y], plane_group);
+
+  group.data(new_positions)
+    .attr('cx', function(d) {return d[0];})
+    .attr('cy', function(d) {return d[1];});
+}
+
+function dragended(d) {
+  d3.select(this).classed("dragged", false);
+}
+
+function draw() {
+	//On click draw 
+    svg.on('click', function() {
+        if (d3.event.defaultPrevented) return; // Dragged
+        var p = [d3.mouse(this)[0], d3.mouse(this)[1]]
+		var group = svg.append('g'); //Append another group that will hold this point and it's sym eq.
+
+		//Calculate the fractional position point p in point group pg
+	    var x = toFractional(p)[0], y = toFractional(p)[1];
+        positions = draw_symmetry([x,y],plane_group);
+		drawCircles(positions,group);
+
+        svg.selectAll("circle").call(drag);
+    });
+};
+
+//draw_cell();
+draw();
+
+</script>
+
+<script>
+$(document).ready(function() {
+       $(".click_answer").click(function(event){
+            var answer = $(this).attr('id');
+            var right_answer = $('#right_answer').text();
+            $.ajax({
+                 type:"POST",
+                 url:"/task1/",
+                 data: {
+                        'pg': answer,
+                        'right_answer': right_answer, 
+                        },
+                 success: function(){
+                     if (answer == right_answer){
+                         var right_or_wrong = "right";
+                     } else if (answer != right_answer) {
+                         var right_or_wrong = "wrong";
+                     };
+                     $('#answer').html("<h2>That's "+right_or_wrong+"!</h2>") 
+                 }  
+            });
+            return false; //<---- move it here
+       });
+
+});
+</script>
+<script>
+function what_is_the_answer(event) {
+                var right_answer = $('#right_answer').text();
+                $('#click_result').html("<h2 style='color:green'>"+right_answer+"</h2>");
+                };
+$("#what_answer").click(what_is_the_answer);
+</script>
+
+{% endblock %}

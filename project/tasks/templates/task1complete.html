@@ -1,0 +1,58 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}Task1{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/planegroups.js"></script>
+<script type="text/javascript" src="/static/js/task1_calc.js"></script>
+{% endblock %}
+
+{% block body_base %}
+<div class="container">
+        <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            <h1>Guess the group</h1>
+            <p>
+            <h2>
+                Congratulations, you have successfully identified {{num_of_games}} plane groups in <b>{{task.duration}}</b> seconds with <b>{{task.wrong}}</b> wrong answers!
+            </h2>
+            <h3><a href="{%url 'task1replay'%}"><button id="click_test" class="btn btn-info">Try again!</button></a></h3>
+            </p>
+            </div>
+        </div>
+        <h1>My scores</h1>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Trial</th>
+                        <th>Duration</th>
+                        <th>Wrong answers</th>
+                        <th>Right answers</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for task in finished_tasks %}
+                    <tr>
+                        <td>{{task.user.get_full_name}}</td>
+                        <td>{{task.duration}}</td>
+                        <td>{{task.wrong}}</td>
+                        <td>{{task.right}}</td>
+                        <td></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        </div>
+</div>
+{% endblock %}
