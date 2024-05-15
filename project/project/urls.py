@@ -22,8 +22,8 @@ from tasks.views import *
 
 
 urlpatterns = [
+    path('', views.homepage, name="home"),
     path('elena/', views.elena, name="elena"),
-    path('home/', views.homepage, name="home"),
     path('users/', views.names, name="names"),
     path("accounts/", include("account.urls")),
     path('admin/', admin.site.urls),

@@ -2,37 +2,35 @@
 
 {% load i18n %}
 
-{% block head_title %}HTCC5{% endblock %}
+{% block head_title %}Guessymmetry home{% endblock %}
 
 {% block body_base %}
-    <section class="jumbotron" style='background-image: url("/static/bg4.png"); background-size:100%;'>
+    <section class="jumbotron" style='background-image: url("/static/bg3.png"); background-size:100%;'>
         <div class="container">
             {% include "_messages.html" %}
-            <h1>{% blocktrans %}Symmetry{% endblocktrans %}</h1>
+            <h1>Guess the Symmetry of molecules!</h1>
             <p>
-                {% blocktrans %}
                     The site for exploring crystallographic symmetry.
-                {% endblocktrans %}
             </p>
             {% if not user.is_authenticated %}
             {% url "account_login" as login_url %}
-            <p>{% blocktrans %}You can <a href="{{ login_url }}" class="btn btn-default">Log In</a> to try out the site.{% endblocktrans %}</p>
+            <p>You can <a href="{{ login_url }}" class="btn btn-default">Log In</a> to try out the site.</p>
             {% endif %}
         </div>
     </section>
     <section>
         <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <h1>Explore plane symmetry groups</h1>
-                        <img src="/static/bg2.png" style="width:300px;" alt="">
+                        <img src="/static/bg1.png" style="width:100%;" alt="">
                          <p style="margin:10px;">
                              <a href="{% url 'task1' %}"><button class="btn btn-success btn-lg">Explore!</button></a>
                          </p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <h1>2D molecules packing</h1>
-                        <img src="/static/bg5.png" style="width:300px;" alt="">
+                        <img src="/static/bg5.png" style="width:100%;" alt="">
                          <p style="margin:10px;">
                              <a href="{% url 'packmol' %}"><button class="btn btn-info btn-lg">Pack!</button></a>
                          </p>
