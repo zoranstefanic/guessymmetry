@@ -149,3 +149,14 @@ STATIC_ROOT = BASE_DIR / "static"
 ACCOUNT_LOGIN_REDIRECT_URL = "home"
 ACCOUNT_LOGOUT_REDIRECT_URL = "home"
 ACCOUNT_OPEN_SIGNUP = False
+
+#EMAILS
+CONTACT_EMAIL = "info@guessymmetry.xyz"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL='info@guessymmetry.xyz'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
+EMAIL_HOST = 'smtp.de.opalstack.com'
+EMAIL_HOST_USER = 'gsy'
+EMAIL_HOST_PASSWORD = 'dyTm7M7uhf&amp;t8'
