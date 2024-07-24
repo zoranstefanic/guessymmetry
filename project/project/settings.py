@@ -25,7 +25,7 @@ SECRET_KEY = '14c@7_uqg!)t-f(@)vg=n^5m#n268t*hluw#+b-y20cqgpe%6e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['guessymmetry.xyz']
+ALLOWED_HOSTS = ['localhost','guessymmetry.xyz']
 
 # Application definition
 

@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from tasks.models import *
 from math import pi, sin
-
+from project.settings import BASE_DIR
 import pickle
 
 NUMBER_OF_GAMES = 10
@@ -81,7 +81,7 @@ def packmol(request,chebi=None):
             #f.close()
         return redirect('packmol')
     else:
-        molecules = pickle.load(open('/home/huk/apps/tgk/project/molecules.pkl','rb'))
+        molecules = pickle.load(open(BASE_DIR/'molecules.pkl','rb'))
         if not chebi:
             chebi = choice(list(molecules.keys()))
         molecule = molecules.get(chebi)
