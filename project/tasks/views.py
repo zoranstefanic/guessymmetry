@@ -81,7 +81,7 @@ def packmol(request,chebi=None):
             #f.close()
         return redirect('packmol')
     else:
-        molecules = pickle.load(open(BASE_DIR/'molecules.pkl','rb'))
+        molecules = pickle.load(open(BASE_DIR/'chebi/molecules.pkl','rb'))
         if not chebi:
             chebi = choice(list(molecules.keys()))
         molecule = molecules.get(chebi)
