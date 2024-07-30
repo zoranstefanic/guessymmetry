@@ -1,8 +1,9 @@
-var numCells = 10;
-var minCell = 200;
-var maxCell = 400;
-var minGamma = 91;
-var maxGamma = 119;
+const scaleFactor = 30;
+const numCells = 10;
+const minCell = 10*scaleFactor;
+const maxCell = 15*scaleFactor;
+const minGamma = 91;
+const maxGamma = 119;
 
 function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
