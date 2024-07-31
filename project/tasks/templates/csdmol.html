@@ -72,7 +72,7 @@ var svg = d3.select('.svg');
 let mol = {{molecule|safe}};
 console.log(mol);
 
-mol.coords = mol.mol.map(a=> [a[0]*scaleFactor, a[1]*scaleFactor, a[2]]);
+mol.coords = mol.mol.map(a=> [a[0]*scaleFactor, a[1]*scaleFactor, a[3]]);
 mol.com = center_of_mass(mol); //calculate the center of mass of initial molecule
 let com_init = center_of_mass(mol); //calculate the center of mass of initial molecule
 

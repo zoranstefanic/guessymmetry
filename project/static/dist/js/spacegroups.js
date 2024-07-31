@@ -1,4 +1,4 @@
-const scaleFactor =200;
+const scaleFactor = 350;
 const numCells = 10;
 const minCell = 10*scaleFactor;
 const maxCell = 15*scaleFactor;
