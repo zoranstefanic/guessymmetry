@@ -33,6 +33,7 @@ urlpatterns = [
     path("task1replay/", task1replay, name="task1replay"),
     path("packmol/<str:chebi>/", packmol, name="packmolchebi"),
     path("packmol/", packmol, name="packmol"),
+    path("csdmol/", csdmol, name="csdmol"),
     path("packmol_view/<int:id>/", packmol_view, name="packmol_view"),
     path("packmol_scoreboard/", packmol_scoreboard, name="packmol_scoreboard"),
     path("scoreboard/", scoreboard, name="scoreboard"),

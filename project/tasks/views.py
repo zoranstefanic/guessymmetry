@@ -7,6 +7,7 @@ from tasks.models import *
 from math import pi, sin
 from project.settings import BASE_DIR
 import pickle
+import json
 
 NUMBER_OF_GAMES = 10
 
@@ -92,6 +93,34 @@ def packmol(request,chebi=None):
                 'plane_groups':plane_groups,
                 'molecule': molecule,
                 'chebi_id': chebi,
+                })
+
+@login_required
+def csdmol(request, csd_id):
+    if request.method == "POST":
+        if request.is_ajax():
+            mol = request.POST.get('mol')
+            cell = request.POST.get('cell')
+            csd_id = request.POST.get('csd_id')
+            group = request.POST.get('group')
+            mol = mol_to_str(mol) # Change to format required by javascript in packmol.html
+            n = len(eval(mol)['atoms'])
+            z = pgz[group]
+            p = 22*22*pi 
+            a, b, gamma = eval(cell)[0], eval(cell)[1], eval(cell)[2]
+            score = (z * n * p) / (a * b * sin((gamma/180)*pi))  
+            play = PackmolPlay.objects.create(mol=mol,cell=cell,chebi=chebi_id,user=request.user,score=score,group=group)
+        return redirect('csdmol')
+    else:
+        molecules = json.load(open(BASE_DIR/'ccds/molecules.json','r'))
+        if not csd_id:
+            csd_id = choice(list(molecules.keys()))
+        molecule = molecules.get(csd_id)
+        return render(request, 'csdmol.html', { 
+                'group': choice(space_groups), 
+                'space_groups':space_groups,
+                'molecule': molecule,
+                'csd_id': csd_id,
                 })
 
 
