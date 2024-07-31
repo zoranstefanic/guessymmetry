@@ -28,7 +28,7 @@
         <div id="right_answer" class="hidden">{{group}}</div>
         <div class="row">
             <div class="col-md-10">
-                <h1>Pack the molecule </h1>
+                <h1>Find the right molecular packing (CSDMOL)</h1>
                     <a href="{%url 'packmol'%}"><button class="btn btn-danger btn-lg"><i class="fa fa-flask"></i> new</button></a>
                     <button id="decrease_a" class="btn btn-info btn-lg"><i class="fa fa-minus"></i><em>a</em></button>
                     <button id="increase_a" class="btn btn-info btn-lg"><i class="fa fa-plus"></i><em>a</em></button>
@@ -62,9 +62,9 @@
 </div>
 
 <script>
-var space_group = "{{group}}";
+var space_group = "{{sg}}";
 var csd_id= "{{csd_id}}";
-var cell = getCell(space_group);
+var cell = {{cell}};
 var a = cell[0], b = cell[1], gamma = cell[2];
 var gammar = (gamma/180)*Math.PI;
 
@@ -72,7 +72,7 @@ var svg = d3.select('.svg');
 let mol = {{molecule|safe}};
 console.log(mol);
 
-mol.coords = mol.atoms.map(a=> [a[0]*scaleFactor, a[1]*scaleFactor, a[2]]);
+mol.coords = mol.mol.map(a=> [a[0]*scaleFactor, a[1]*scaleFactor, a[2]]);
 mol.com = center_of_mass(mol); //calculate the center of mass of initial molecule
 let com_init = center_of_mass(mol); //calculate the center of mass of initial molecule
 

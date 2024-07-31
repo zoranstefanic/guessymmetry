@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from tasks.models import *
 from math import pi, sin
 from project.settings import BASE_DIR
+from ccdc.space_groups import space_groups
 import pickle
 import json
 
@@ -96,7 +97,7 @@ def packmol(request,chebi=None):
                 })
 
 @login_required
-def csdmol(request, csd_id):
+def csdmol(request, csd_id=None):
     if request.method == "POST":
         if request.is_ajax():
             mol = request.POST.get('mol')
@@ -112,17 +113,17 @@ def csdmol(request, csd_id):
             play = PackmolPlay.objects.create(mol=mol,cell=cell,chebi=chebi_id,user=request.user,score=score,group=group)
         return redirect('csdmol')
     else:
-        molecules = json.load(open(BASE_DIR/'ccds/molecules.json','r'))
+        molecules = json.load(open(BASE_DIR/'ccdc/molecules.json','r'))
         if not csd_id:
             csd_id = choice(list(molecules.keys()))
         molecule = molecules.get(csd_id)
         return render(request, 'csdmol.html', { 
-                'group': choice(space_groups), 
+                'sg': molecule['sg'], 
+                'cell': molecule['uc'], 
                 'space_groups':space_groups,
                 'molecule': molecule,
                 'csd_id': csd_id,
                 })
-
 
 def mol_to_str(s):
     s = s.split(',')

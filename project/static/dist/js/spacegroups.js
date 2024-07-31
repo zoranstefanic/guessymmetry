@@ -1,4 +1,4 @@
-const scaleFactor = 30;
+const scaleFactor =200;
 const numCells = 10;
 const minCell = 10*scaleFactor;
 const maxCell = 15*scaleFactor;
@@ -9,7 +9,7 @@ function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
-function getCell(plane_group) {
+function getCell(space_group) {
 	var a = getRandom(minCell,maxCell);
 	var b = getRandom(minCell,maxCell);
 	var gamma = getRandom(minGamma,maxGamma);
@@ -34,9 +34,8 @@ function getCell(plane_group) {
 	}
 }
 
-
 // This is an object containing all 17 plane groups
-var planegroups = 
+var spacegroups = 
 {
 	'p1':
 		{
