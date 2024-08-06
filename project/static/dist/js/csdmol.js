@@ -1,3 +1,38 @@
+const numCells = 10;
+const minCell = 10*scaleFactor;
+const maxCell = 15*scaleFactor;
+const minGamma = 91;
+const maxGamma = 119;
+
+function getRandom(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
+function getCell(space_group) {
+	var a = getRandom(minCell,maxCell);
+	var b = getRandom(minCell,maxCell);
+	var gamma = getRandom(minGamma,maxGamma);
+	switch(plane_group) {
+		case	'p1': return [a,b,gamma];
+		case	'p2': return [a,b,gamma];
+		case	'pm': return [a,b,90];
+		case	'pg': return [a,b,90];
+		case 	'cm': return [a,b,90];
+		case  'p2mm': return [a,b,90];
+		case  'p2mg': return [a,b,90];
+		case  'p2gg': return [a,b,90];
+		case  'c2mm': return [a,b,90];
+		case    'p4': return [a,a,90];
+		case  'p4mm': return [a,a,90];
+		case  'p4gm': return [a,a,90];
+		case    'p3': return [a,a,120];
+		case  'p3m1': return [a,a,120];
+		case  'p31m': return [a,a,120];
+		case    'p6': return [a,a,120];
+		case  'p6mm': return [a,a,120];
+	}
+}
+
 function randomColor () {
     return "hsla(" + Math.random() * 360 + ",90%,50%,0.7)";
     }

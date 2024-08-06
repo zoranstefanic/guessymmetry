@@ -126,7 +126,7 @@ function generate_symmetry_mates(mol,space_group) {
     for (p of mol.coords) {
         let x = p[0], y = p[1];
         p = toFractional([x,y],space_group).concat(p[2]);
-        let symops = planegroups[space_group]['symops'](p);	
+        let symops = spacegroups[space_group]['symops'](p);	
         // symops = [ [ 1, 1 ], [ -1, -1 ] ] for pg="p2"
             for ( k=0; k < symops.length; k++) {       
                mol.sym_positions = mol.sym_positions.concat(generateCells1(symops[k].concat(p[2])));
