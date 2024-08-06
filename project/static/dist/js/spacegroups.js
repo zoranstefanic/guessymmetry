@@ -1,277 +1,831 @@
-const scaleFactor = 350;
-const numCells = 10;
-const minCell = 10*scaleFactor;
-const maxCell = 15*scaleFactor;
-const minGamma = 91;
-const maxGamma = 119;
+const scaleFactor = 300;
 
-function getRandom(min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
-}
-
-function getCell(space_group) {
-	var a = getRandom(minCell,maxCell);
-	var b = getRandom(minCell,maxCell);
-	var gamma = getRandom(minGamma,maxGamma);
-	switch(plane_group) {
-		case	'p1': return [a,b,gamma];
-		case	'p2': return [a,b,gamma];
-		case	'pm': return [a,b,90];
-		case	'pg': return [a,b,90];
-		case 	'cm': return [a,b,90];
-		case  'p2mm': return [a,b,90];
-		case  'p2mg': return [a,b,90];
-		case  'p2gg': return [a,b,90];
-		case  'c2mm': return [a,b,90];
-		case    'p4': return [a,a,90];
-		case  'p4mm': return [a,a,90];
-		case  'p4gm': return [a,a,90];
-		case    'p3': return [a,a,120];
-		case  'p3m1': return [a,a,120];
-		case  'p31m': return [a,a,120];
-		case    'p6': return [a,a,120];
-		case  'p6mm': return [a,a,120];
-	}
-}
-
-// This is an object containing all 17 plane groups
+// This is an object containing 39 space groups present in a subset
 var spacegroups = 
 {
-	'p1':
-		{
+    'P212121':
+        {
         'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
                 return [
-                    [x,y],
-				]
-			}
+                    [x,y,z],
+                    [1/2-x,-y,1/2+z],
+                    [1/2+x,1/2-y,-z],
+                    [-x,1/2+y,1/2-z],
+                ]
+            }   
+    }, 
+    'P-1':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-x,-y,-z],
+                ]
+            }   
+    }, 
+    
+
+    'Pbca':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2-x,-y,1/2+z],
+                    [1/2+x,1/2-y,-z],
+                    [-x,1/2+y,1/2-z],
+                    [-x,-y,-z],
+                    [1/2+x,y,1/2-z],
+                    [1/2-x,1/2+y,z],
+                    [x,1/2-y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Pnam':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-x,-y,1/2+z],
+                    [1/2+x,1/2-y,1/2-z],
+                    [1/2-x,1/2+y,-z],
+                    [-x,-y,-z],
+                    [x,y,1/2-z],
+                    [1/2-x,1/2+y,1/2+z],
+                    [1/2+x,1/2-y,z],
+
+                ]
+            }   
+    }, 
+    
+
+    'P21/n':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2-x,1/2+y,1/2-z],
+                    [-x,-y,-z],
+                    [1/2+x,1/2-y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'P21/c':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-x,1/2+y,1/2-z],
+                    [-x,-y,-z],
+                    [x,1/2-y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Pna21':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-x,-y,1/2+z],
+                    [1/2-x,1/2+y,1/2+z],
+                    [1/2+x,1/2-y,z],
+
+                ]
+            }   
+    }, 
+    
+
+    'P21':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-x,1/2+y,-z],
+
+                ]
+            }   
+    }, 
+    
+
+    'R-3m':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-y,x-y,z],
+                    [-x+y,-x,z],
+                    [y,x,-z],
+                    [2/3+x,1/3+y,1/3+z],
+                    [2/3-y,1/3+x-y,1/3+z],
+                    [2/3-x+y,1/3-x,1/3+z],
+                    [2/3+y,1/3+x,1/3-z],
+                    [1/3+x,2/3+y,2/3+z],
+                    [1/3+y,2/3+x,2/3-z],
+                    [x-y,-y,-z],
+                    [-x,-x+y,-z],
+                    [1/3-y,2/3+x-y,2/3+z],
+                    [1/3-x+y,2/3-x,2/3+z],
+                    [1/3+x-y,2/3-y,2/3-z],
+                    [1/3-x,2/3-x+y,2/3-z],
+                    [2/3+x-y,1/3-y,1/3-z],
+                    [2/3-x,1/3-x+y,1/3-z],
+                    [-x,-y,-z],
+                    [y,-x+y,-z],
+                    [x-y,x,-z],
+                    [-y,-x,z],
+                    [1/3-x,2/3-y,2/3-z],
+                    [1/3+y,2/3-x+y,2/3-z],
+                    [1/3+x-y,2/3+x,2/3-z],
+                    [1/3-y,2/3-x,2/3+z],
+                    [2/3-x,1/3-y,1/3-z],
+                    [2/3-y,1/3-x,1/3+z],
+                    [-x+y,y,z],
+                    [x,x-y,z],
+                    [2/3+y,1/3-x+y,1/3-z],
+                    [2/3+x-y,1/3+x,1/3-z],
+                    [2/3-x+y,1/3+y,1/3+z],
+                    [2/3+x,1/3+x-y,1/3+z],
+                    [1/3-x+y,2/3+y,2/3+z],
+                    [1/3+x,2/3+x-y,2/3+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'P41212':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2-y,1/2+x,1/4+z],
+                    [-x,-y,1/2+z],
+                    [1/2+y,1/2-x,3/4+z],
+                    [y,x,-z],
+                    [1/2+x,1/2-y,3/4-z],
+                    [-y,-x,1/2-z],
+                    [1/2-x,1/2+y,1/4-z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Pbn21':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2-x,1/2+y,z],
+                    [1/2+x,1/2-y,1/2+z],
+                    [-x,-y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'P1121/b':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-x,1/2-y,1/2+z],
+                    [-x,-y,-z],
+                    [x,1/2+y,1/2-z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Pn21a':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2-x,1/2+y,1/2+z],
+                    [1/2+x,y,1/2-z],
+                    [-x,1/2+y,-z],
+
+                ]
+            }   
+    }, 
+    
+
+    'C2/c':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2+x,1/2+y,z],
+                    [-x,y,1/2-z],
+                    [1/2-x,1/2+y,1/2-z],
+                    [-x,-y,-z],
+                    [1/2-x,1/2-y,-z],
+                    [x,-y,1/2+z],
+                    [1/2+x,1/2-y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Pnma':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2-x,-y,1/2+z],
+                    [1/2+x,1/2-y,1/2-z],
+                    [-x,1/2+y,-z],
+                    [-x,-y,-z],
+                    [1/2+x,y,1/2-z],
+                    [1/2-x,1/2+y,1/2+z],
+                    [x,1/2-y,z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Pnnm':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-x,-y,z],
+                    [1/2-x,1/2+y,1/2-z],
+                    [1/2+x,1/2-y,1/2-z],
+                    [-x,-y,-z],
+                    [x,y,-z],
+                    [1/2+x,1/2-y,1/2+z],
+                    [1/2-x,1/2+y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'P21/m':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-x,1/2+y,-z],
+                    [-x,-y,-z],
+                    [x,1/2-y,z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Pa3':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [z,x,y],
+                    [y,z,x],
+                    [-x,1/2+y,1/2-z],
+                    [-z,1/2+x,1/2-y],
+                    [-y,1/2+z,1/2-x],
+                    [1/2-x,-y,1/2+z],
+                    [1/2-z,-x,1/2+y],
+                    [1/2-y,-z,1/2+x],
+                    [1/2+x,1/2-y,-z],
+                    [1/2+z,1/2-x,-y],
+                    [1/2+y,1/2-z,-x],
+                    [-x,-y,-z],
+                    [-z,-x,-y],
+                    [-y,-z,-x],
+                    [x,1/2-y,1/2+z],
+                    [z,1/2-x,1/2+y],
+                    [y,1/2-z,1/2+x],
+                    [1/2+x,y,1/2-z],
+                    [1/2+z,x,1/2-y],
+                    [1/2+y,z,1/2-x],
+                    [1/2-x,1/2+y,z],
+                    [1/2-z,1/2+x,y],
+                    [1/2-y,1/2+z,x],
+
+                ]
+            }   
+    }, 
+    
+
+    'Pca21':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2-x,y,1/2+z],
+                    [1/2+x,-y,z],
+                    [-x,-y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Cc':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2+x,1/2+y,z],
+                    [x,-y,1/2+z],
+                    [1/2+x,1/2-y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'P43212':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2-y,1/2+x,3/4+z],
+                    [1/2+x,1/2-y,1/4-z],
+                    [-x,-y,1/2+z],
+                    [y,x,-z],
+                    [1/2+y,1/2-x,1/4+z],
+                    [1/2-x,1/2+y,3/4-z],
+                    [-y,-x,1/2-z],
+
+                ]
+            }   
+    }, 
+    
+
+    'P21/a':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2-x,1/2+y,-z],
+                    [-x,-y,-z],
+                    [1/2+x,1/2-y,z],
+
+                ]
+            }   
+    }, 
+    
+
+    'R3c':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-y,x-y,z],
+                    [-y,-x,1/2+z],
+                    [-x+y,-x,z],
+                    [x,x-y,1/2+z],
+                    [-x+y,y,1/2+z],
+                    [1/3+x,2/3+y,2/3+z],
+                    [1/3-y,2/3+x-y,2/3+z],
+                    [1/3-y,2/3-x,1/6+z],
+                    [1/3-x+y,2/3-x,2/3+z],
+                    [1/3+x,2/3+x-y,1/6+z],
+                    [1/3-x+y,2/3+y,1/6+z],
+                    [2/3+x,1/3+y,1/3+z],
+                    [2/3-y,1/3+x-y,1/3+z],
+                    [2/3-y,1/3-x,5/6+z],
+                    [2/3-x+y,1/3-x,1/3+z],
+                    [2/3+x,1/3+x-y,5/6+z],
+                    [2/3-x+y,1/3+y,5/6+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'I4mm':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2+x,1/2+y,1/2+z],
+                    [-y,x,z],
+                    [1/2-y,1/2+x,1/2+z],
+                    [-x,-y,z],
+                    [1/2-x,1/2-y,1/2+z],
+                    [y,-x,z],
+                    [1/2+y,1/2-x,1/2+z],
+                    [-x,y,z],
+                    [1/2-x,1/2+y,1/2+z],
+                    [y,x,z],
+                    [1/2+y,1/2+x,1/2+z],
+                    [x,-y,z],
+                    [1/2+x,1/2-y,1/2+z],
+                    [-y,-x,z],
+                    [1/2-y,1/2-x,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'P42/mbc':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-y,x,1/2+z],
+                    [y,-x,1/2+z],
+                    [1/2+y,1/2+x,1/2-z],
+                    [-x,-y,z],
+                    [1/2-x,1/2+y,-z],
+                    [1/2+x,1/2-y,-z],
+                    [1/2-y,1/2-x,1/2-z],
+                    [-x,-y,-z],
+                    [y,-x,1/2-z],
+                    [-y,x,1/2-z],
+                    [1/2-y,1/2-x,1/2+z],
+                    [x,y,-z],
+                    [1/2+x,1/2-y,z],
+                    [1/2-x,1/2+y,z],
+                    [1/2+y,1/2+x,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'R-3':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/3+x,2/3+y,2/3+z],
+                    [2/3+x,1/3+y,1/3+z],
+                    [-y,x-y,z],
+                    [-x+y,-x,z],
+                    [1/3-y,2/3+x-y,2/3+z],
+                    [1/3-x+y,2/3-x,2/3+z],
+                    [2/3-y,1/3+x-y,1/3+z],
+                    [2/3-x+y,1/3-x,1/3+z],
+                    [-x,-y,-z],
+                    [2/3-x,1/3-y,1/3-z],
+                    [1/3-x,2/3-y,2/3-z],
+                    [y,-x+y,-z],
+                    [x-y,x,-z],
+                    [2/3+y,1/3-x+y,1/3-z],
+                    [2/3+x-y,1/3+x,1/3-z],
+                    [1/3+y,2/3-x+y,2/3-z],
+                    [1/3+x-y,2/3+x,2/3-z],
+
+                ]
+            }   
+    }, 
+    
+
+    'C2/m':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-x,y,-z],
+                    [1/2+x,1/2+y,z],
+                    [1/2-x,1/2+y,-z],
+                    [-x,-y,-z],
+                    [x,-y,z],
+                    [1/2-x,1/2-y,-z],
+                    [1/2+x,1/2-y,z],
+
+                ]
+            }   
+    }, 
+    
+
+    'P4/n':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2-y,x,z],
+                    [1/2-x,1/2-y,z],
+                    [y,1/2-x,z],
+                    [-x,-y,-z],
+                    [1/2+y,-x,-z],
+                    [1/2+x,1/2+y,-z],
+                    [-y,1/2+x,-z],
+
+                ]
+            }   
+    }, 
+    
+
+    'P63/mmc':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-y,x-y,z],
+                    [-x+y,-x,z],
+                    [-x,-y,1/2+z],
+                    [y,-x+y,1/2+z],
+                    [x-y,x,1/2+z],
+                    [y,x,-z],
+                    [x-y,-y,-z],
+                    [-x,-x+y,-z],
+                    [-y,-x,1/2-z],
+                    [-x+y,y,1/2-z],
+                    [x,x-y,1/2-z],
+                    [-x,-y,-z],
+                    [y,-x+y,-z],
+                    [x-y,x,-z],
+                    [x,y,1/2-z],
+                    [-y,x-y,1/2-z],
+                    [-x+y,-x,1/2-z],
+                    [-y,-x,z],
+                    [-x+y,y,z],
+                    [x,x-y,z],
+                    [y,x,1/2+z],
+                    [x-y,-y,1/2+z],
+                    [-x,-x+y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Pcab':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-x,1/2-y,1/2+z],
+                    [1/2+x,-y,1/2-z],
+                    [1/2-x,1/2+y,-z],
+                    [-x,-y,-z],
+                    [x,1/2+y,1/2-z],
+                    [1/2-x,y,1/2+z],
+                    [1/2+x,1/2-y,z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Fdd2':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [x,1/2+y,1/2+z],
+                    [1/2+x,y,1/2+z],
+                    [1/2+x,1/2+y,z],
+                    [1/4-x,1/4+y,1/4+z],
+                    [1/4-x,3/4+y,3/4+z],
+                    [3/4-x,1/4+y,3/4+z],
+                    [3/4-x,3/4+y,1/4+z],
+                    [1/4+x,1/4-y,1/4+z],
+                    [1/4+x,3/4-y,3/4+z],
+                    [3/4+x,1/4-y,3/4+z],
+                    [3/4+x,3/4-y,1/4+z],
+                    [1/2-x,-y,1/2+z],
+                    [1/2-x,1/2-y,z],
+                    [-x,-y,z],
+                    [-x,1/2-y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Cmc21':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2+x,1/2+y,z],
+                    [-x,y,z],
+                    [1/2-x,1/2+y,z],
+                    [x,-y,1/2+z],
+                    [1/2+x,1/2-y,1/2+z],
+                    [-x,-y,1/2+z],
+                    [1/2-x,1/2-y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Iba2':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [-x,-y,z],
+                    [1/2+x,1/2-y,z],
+                    [1/2-x,1/2+y,z],
+                    [1/2+x,1/2+y,1/2+z],
+                    [1/2-x,1/2-y,1/2+z],
+                    [x,-y,1/2+z],
+                    [-x,y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'I41/a':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2+x,1/2+y,1/2+z],
+                    [3/4-y,1/4+x,1/4+z],
+                    [1/4-y,3/4+x,3/4+z],
+                    [1/2-x,-y,1/2+z],
+                    [-x,1/2-y,z],
+                    [3/4+y,3/4-x,3/4+z],
+                    [1/4+y,1/4-x,1/4+z],
+                    [-x,-y,-z],
+                    [1/2-x,1/2-y,1/2-z],
+                    [1/4+y,3/4-x,3/4-z],
+                    [3/4+y,1/4-x,1/4-z],
+                    [1/2+x,y,1/2-z],
+                    [x,1/2+y,-z],
+                    [1/4-y,1/4+x,1/4-z],
+                    [3/4-y,3/4+x,3/4-z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Pc':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [x,-y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'I41':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2+x,1/2+y,1/2+z],
+                    [-y,1/2+x,1/4+z],
+                    [1/2-y,x,3/4+z],
+                    [-x,-y,z],
+                    [1/2-x,1/2-y,1/2+z],
+                    [y,1/2-x,1/4+z],
+                    [1/2+y,-x,3/4+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Pbcn':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2-x,1/2-y,1/2+z],
+                    [1/2+x,1/2-y,-z],
+                    [-x,y,1/2-z],
+                    [-x,-y,-z],
+                    [1/2+x,1/2+y,1/2-z],
+                    [1/2-x,1/2+y,z],
+                    [x,-y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'Aba2':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [x,1/2+y,1/2+z],
+                    [1/2-x,1/2+y,z],
+                    [1/2-x,y,1/2+z],
+                    [1/2+x,1/2-y,z],
+                    [1/2+x,-y,1/2+z],
+                    [-x,-y,z],
+                    [-x,1/2-y,1/2+z],
+
+                ]
+            }   
+    }, 
+    
+
+    'I2/m':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                    [1/2+x,1/2+y,1/2+z],
+                    [-x,y,-z],
+                    [1/2-x,1/2+y,1/2-z],
+                    [-x,-y,-z],
+                    [1/2-x,1/2-y,1/2-z],
+                    [x,-y,z],
+                    [1/2+x,1/2-y,1/2+z],
+
+                ]
+            }   
     },
-	'p2':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-x,-y],
-				]
-			}
-    },
-	'pm':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-x,y],
-				]
-			}
-    },
-	'pg':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-x,y+0.5],
-				]
-			}
-    },
-	'cm':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-x,y],
-                    [x+0.5,y+0.5],
-                    [-x+0.5,y+0.5],
-				]
-			}
-    },
-	'p2mm':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-x,-y],
-                    [-x,y],
-                    [x,-y],
-				]
-			}
-    },
-	'p2mg':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-x,-y],
-                    [-x+0.5,y],
-                    [x+0.5,-y],
-				]
-			}
-    },
-	'p2gg':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-x,-y],
-                    [-x+0.5,y+0.5],
-                    [x+0.5,-y+0.5],
-				]
-			}
-    },
-	'c2mm':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-x,-y],
-                    [-x,y],
-                    [x,-y],
-                    [x+0.5,y+0.5],
-                    [-x+0.5,-y+0.5],
-                    [-x+0.5,y+0.5],
-                    [x+0.5,-y+0.5],
-				]
-			}
-    },
-	'p4':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-x,-y],
-                    [-y,x],
-                    [y,-x],
-                    ]
-			}
-    },
-	'p4mm':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-x,-y],
-                    [-y,x],
-                    [y,-x],
-                    [-x,y],
-                    [ x,-y],
-                    [ y,x],
-                    [-y,-x],
-                    ]
-			}
-    },
-	'p4gm':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-x,-y],
-                    [-y,x],
-                    [y,-x],
-                    [-x+0.5,y+0.5],
-                    [ x+0.5,-y+0.5],
-                    [ y+0.5,x+0.5],
-                    [-y+0.5,-x+0.5],
-                    ]
-			}
-    },
-	'p3':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-y,x-y],
-                    [y-x,-x],
-                    ]
-			}
-    },
-	'p3m1':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-y,x-y],
-                    [y-x,-x],
-                    [-y,-x],
-                    [y-x,y],
-                    [x,x-y],
-                    ]
-			}
-    },
-	'p31m':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-y,x-y],
-                    [y-x,-x],
-                    [y,x],
-                    [x-y,-y],
-                    [-x,y-x],
-                    ]
-			}
-    },
-	'p6':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-y,x-y],
-                    [y-x,-x],
-                    [-x,-y],
-                    [y,y-x],
-                    [x-y,x],
-                    ]
-			}
-    },
-	'p6mm':
-		{
-        'symops': 
-			function (p) { 
-            	var x = p[0], y = p[1];
-                return [
-                    [x,y],
-                    [-y,x-y],
-                    [y-x,-x],
-                    [-x,-y],
-                    [y,y-x],
-                    [x-y,x],
-                    [-y,-x],
-                    [y-x,y],
-                    [x,x-y],
-                    [ y, x],
-                    [x-y,-y],
-                    [-x,y-x],
-                    ]
-			}
-    }
+
 }
