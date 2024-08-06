@@ -118,10 +118,8 @@ def csdmol(request, csd_id=None):
             csd_id = choice(list(molecules.keys()))
         molecule = molecules.get(csd_id)
         return render(request, 'csdmol.html', { 
-                'sg': molecule['sg'], 
-                'cell': molecule['uc'], 
-                'space_groups':space_groups,
                 'molecule': molecule,
+                'space_groups':space_groups,
                 'csd_id': csd_id,
                 })
 

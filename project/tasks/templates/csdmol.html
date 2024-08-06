@@ -29,13 +29,14 @@
         <div class="row">
             <div class="col-md-10">
                 <h1>Find the right molecular packing (CSDMOL)</h1>
+                <h1>{{csd_id}}</h1>
                     <a href="{%url 'packmol'%}"><button class="btn btn-danger btn-lg"><i class="fa fa-flask"></i> new</button></a>
-                    <button id="decrease_a" class="btn btn-info btn-lg"><i class="fa fa-minus"></i><em>a</em></button>
-                    <button id="increase_a" class="btn btn-info btn-lg"><i class="fa fa-plus"></i><em>a</em></button>
-                    <button id="decrease_b" class="btn btn-info btn-lg"><i class="fa fa-minus"></i><em>b</em></button>
-                    <button id="increase_b" class="btn btn-info btn-lg"><i class="fa fa-plus"></i><em>b</em></button>
-                    <button id="rotate-left" class="btn btn-info btn-lg"><i class="fa fa-rotate-left"></i> rotate left</button>
-                    <button id="rotate-right" class="btn btn-info btn-lg"><i class="fa fa-rotate-right"></i> rotate right</button>
+                    <button id="plus_x" class="btn btn-info btn-lg">+x</button>
+                    <button id="minus_x" class="btn btn-info btn-lg">-x</button>
+                    <button id="plus_y" class="btn btn-info btn-lg">+y</button>
+                    <button id="minus_y" class="btn btn-info btn-lg">-y</button>
+                    <button id="rotate-left" class="btn btn-info btn-lg"><i class="fa fa-rotate-left"></i> left</button>
+                    <button id="rotate-right" class="btn btn-info btn-lg"><i class="fa fa-rotate-right"></i> right</button>
                 </p>
             </div>
             <div class="col-md-2" style="margin-top:20px;">
@@ -62,32 +63,17 @@
 </div>
 
 <script>
-var space_group = "{{sg}}";
-var csd_id= "{{csd_id}}";
-var cell = {{cell}};
-var a = cell[0], b = cell[1], gamma = cell[2];
-var gammar = (gamma/180)*Math.PI;
-
-var svg = d3.select('.svg');
+let csd_id= "{{csd_id}}";
 let mol = {{molecule|safe}};
+let space_group = mol['sg'];
+let cell = mol['uc'];
 console.log(mol);
 
-mol.coords = mol.mol.map(a=> [a[0]*scaleFactor, a[1]*scaleFactor, a[3]]);
+var svg = d3.select('.svg');
+
+mol.coords = mol.mol.map(a=> [a[0]*scaleFactor, a[1]*scaleFactor,a[2]*scaleFactor, a[3]]);
 mol.com = center_of_mass(mol); //calculate the center of mass of initial molecule
 let com_init = center_of_mass(mol); //calculate the center of mass of initial molecule
-
-function change_pg(pg) {
-    space_group = pg;
-    cell = getCell(space_group);
-    a = cell[0], b = cell[1], gamma = cell[2];
-    gammar = (gamma/180)*Math.PI;
-    draw_cell();
-}
-
-function increase_a() { a += 20; generate_symmetry_mates(mol,space_group); draw_sym_mates(); draw_cell(); }
-function decrease_a() { a -= 20; generate_symmetry_mates(mol,space_group); draw_sym_mates(); draw_cell(); }
-function increase_b() { b += 20; generate_symmetry_mates(mol,space_group); draw_sym_mates(); draw_cell(); }
-function decrease_b() { b -= 20; generate_symmetry_mates(mol,space_group); draw_sym_mates(); draw_cell(); }
 
 function center_of_mass(mol) {
     let arr = mol.coords;
@@ -102,7 +88,8 @@ function draw_molecule(mol) {
     .join("circle")
     .attr("cx", a => a[0])
     .attr("cy", a => a[1])
-    .attr('class', a => 'atom' + a[2] +' mol')
+    .attr("z-index", a => a[2])
+    .attr('class', a => 'atom' + a[3] +' mol')
     .attr("r", 22)
     .attr("stroke",'black')
     .attr("stroke-width",'3')
@@ -153,7 +140,7 @@ function move_here() {
     });
     }
 
-draw_cell();
+//draw_cell();
 draw_molecule(mol);
 move_here();
 </script>
@@ -189,10 +176,10 @@ function what_is_the_answer(event) {
                 $('#click_result').html("<h2 style='color:green'>"+space_group+"</h2>");
                 };
 $("#what_answer").click(what_is_the_answer);
-$("#increase_a").click(increase_a);
-$("#decrease_a").click(decrease_a);
-$("#increase_b").click(increase_b);
-$("#decrease_b").click(decrease_b);
+$("#plus_x").click(plus_x);
+$("#minus_x").click(minus_x);
+$("#plus_y").click(plus_y);
+$("#minus_y").click(minus_y);
 $("#draw_sym_mates").click(()=> draw_sym_mates());
 </script>
 

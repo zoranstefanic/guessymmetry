@@ -45,6 +45,21 @@ function toFractional(p) {
     return [fractx % 1,fracty % 1]; // x and y in range [0,1] 
     }
 
+function d2r(angle) {
+        return (angle/180)*Math.PI;
+    }
+
+function projection(p,cell) {
+    // Calculates the xy projection of the 3D point p(x,y,z) 
+    // given in fractional coordinates
+    // Returns [xp,yp, d] where d is the distance from the plane
+    let x = p[0], y = p[1], z = p[2];
+    //let a, b, c, alphar, betar, gammar = cell[0], cell[1], cell[2], d2r(cell[3]), d2r(cell[4]), d2r(cell[5]); 
+    let xp = x + (z*c)/(a*Math.sin(gammar)**2)*(Math.cos(betar)-Math.cos(gammar)*Math.cos(alpha));
+    let yp = y + (z*c)/(b*Math.sin(gammar)**2)*(Math.cos(alphar)-Math.cos(gammar)*Math.cos(betar));
+    return [xp,yp];
+    }
+
 function toPixel(xfrac,yfrac) {
       var x = a * (xfrac + Math.cos(gammar)*yfrac);
       var y = Math.sin(gammar)*b*yfrac;
