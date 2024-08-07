@@ -1,5 +1,3 @@
-const scaleFactor = 300;
-
 // This is an object containing 39 space groups present in a subset
 var spacegroups = 
 {

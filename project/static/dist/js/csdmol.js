@@ -1,8 +1,74 @@
+const scaleFactor = 250;
 const numCells = 10;
 const minCell = 10*scaleFactor;
 const maxCell = 15*scaleFactor;
 const minGamma = 91;
 const maxGamma = 119;
+
+function center_of_mass(mol) {
+    let arr = mol.coords;
+    let cx = 0, cy=0;
+    for (let i = 0; i< arr.length; i++) { cx = cx + arr[i][0]; cy = cy + arr[i][1]; };
+    return [cx/arr.length,cy/arr.length];
+    }
+
+function draw_molecule(mol) {
+    let a = mol.coords;
+    d3.select('.svg').selectAll('.mol').data(a)
+    .join("circle")
+    .attr("cx", a => a[0])
+    .attr("cy", a => a[1])
+    .attr("opacity", a => a[2])
+    .attr('class', a => 'atom' + a[3] +' mol')
+    .attr("r", 22)
+    .attr("stroke",'black')
+    .attr("stroke-width",'1')
+    return mol;
+    }
+
+function draw_sym_mates() {
+    let a = mol.sym_positions;
+    d3.select('.svg').selectAll('.sym').data(mol.sym_positions)
+    .join("circle")
+    .attr("cx", function(a) { return  a[0]; })
+    .attr("cy", function(a) { return  a[1]; })
+    .attr('class', function (a) { return 'atom' + a[2] +' sym' })
+    //.attr('class', 'sym')
+    .attr("r", 22)
+    return mol;
+    }
+
+function generate_symmetry_mates(mol,space_group) {
+    mol.sym_positions = [];
+    for (p of mol.coords) {
+        let x = p[0], y = p[1];
+        p = toFractional([x,y],space_group).concat(p[2]);
+        let symops = spacegroups[space_group]['symops'](p);	
+        // symops = [ [ 1, 1 ], [ -1, -1 ] ] for pg="p2"
+            for ( k=0; k < symops.length; k++) {       
+               mol.sym_positions = mol.sym_positions.concat(generateCells1(symops[k].concat(p[2])));
+            }
+    }
+    return mol;
+    }
+
+function move_here() {
+    // Moves the molecule at 
+    d3.select('.svg').on('click', function() {
+        if (d3.event.defaultPrevented) return; // Dragged
+        let p = [d3.mouse(this)[0], d3.mouse(this)[1]]; // Mouse click point
+        let t = [p[0] - mol.com[0] + com_init[0] ,p[1] - mol.com[1] + com_init[1] ]; // Translation to apply
+        d3.selectAll('.mol').raise();
+        d3.selectAll('.mol')
+        .transition()
+        .duration(500)
+        .style('transform','translate(' + p[0]+'px,' + p[1] +'px)');
+        mol.coords = mol.coords.map(pt => [pt[0] + t[0], pt[1] + t[1], pt[2]]);
+        mol.com = center_of_mass(mol); // Update the center of mass upon translation
+        generate_symmetry_mates(mol,space_group);
+        draw_sym_mates();
+    });
+    }
 
 function getRandom(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
