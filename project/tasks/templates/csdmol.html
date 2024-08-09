@@ -21,7 +21,7 @@
             <div class="col-md-10">
                 <h1>Find the right molecular packing (CSDMOL)</h1>
                 <h1>{{csd_id}}</h1>
-                    <a href="{%url 'packmol'%}"><button class="btn btn-danger btn-lg"><i class="fa fa-flask"></i> new</button></a>
+                    <a href="{%url 'csdmol'%}"><button class="btn btn-danger btn-lg"><i class="fa fa-flask"></i> new</button></a>
                     <button id="plus_x" class="btn btn-info btn-lg">+x</button>
                     <button id="minus_x" class="btn btn-info btn-lg">-x</button>
                     <button id="plus_y" class="btn btn-info btn-lg">+y</button>
@@ -40,9 +40,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="btn-group">
-                    {% for pg in space_groups %}
-                        <button class="btn btn-info click_answer" type="button" id="{{pg}}"><h4><a href="">{{pg}}</a></h4></button>
-                    {% endfor %}
+                 <button class="btn btn-info click_answer" type="button" id="{{space_group}}"><h4><a href="">{{space_group}}</a></h4></button>
                 </div>
             </div>
         </div>
@@ -69,6 +67,8 @@ mol.com = center_of_mass(mol); //calculate the center of mass of initial molecul
 let com_init = center_of_mass(mol); //calculate the center of mass of initial molecule
 
 //draw_cell();
+//draw_random_circles();
+draw_cell();
 draw_molecule(mol);
 move_here();
 </script>
