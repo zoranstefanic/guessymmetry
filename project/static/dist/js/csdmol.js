@@ -67,6 +67,14 @@ function draw_sym_mates() {
     return mol;
     }
 
+function expand_unit_cells(){
+        mol.sym_frac_uc = mol.sym_frac_uc.concat(mol.sym_frac_uc.map(x => [x[0]+1,x[1],x[2],x[3]]));
+        mol.sym_frac_uc = mol.sym_frac_uc.concat(mol.sym_frac_uc.map(x => [x[0],x[1]+1,x[2],x[3]]));
+        mol.sym_frac_uc = mol.sym_frac_uc.concat(mol.sym_frac_uc.map(x => [x[0]+1,x[1]+1,x[2],x[3]]));
+        calc_uc_coord();
+        draw_sym_mates();
+    }
+
 function center_of_mass(mol) {
     let arr = mol.coords;
     let cx = 0, cy=0, cz = 0;
