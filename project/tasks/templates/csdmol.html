@@ -57,20 +57,23 @@ let mol = {{molecule|safe}};
 let space_group = mol['sg'];
 let cell = mol['uc'];
 let a = cell[0], b = cell[1], c = cell[2], alphar = d2r(cell[3]), betar = d2r(cell[4]), gammar =  d2r(cell[5]);
-console.log(mol);
-
+//console.log(mol);
 var svg = d3.select('.svg');
 
-mol.coords = mol.mol.map(a=> [a[0]*scaleFactor, a[1]*scaleFactor,a[2]*scaleFactor, a[3]]);
-console.log(mol.coords);
-mol.com = center_of_mass(mol); //calculate the center of mass of initial molecule
-let com_init = center_of_mass(mol); //calculate the center of mass of initial molecule
-
-//draw_cell();
-//draw_random_circles();
-draw_cell();
+//One molecule coordinates with respect to unit cell coordinate system
+mol_coords(mol);
+//Initially draw the one molecule in the asymmetric unit
 draw_molecule(mol);
-move_here();
+create_sym_frac(mol,space_group);
+map_to_main_cell();
+calc_uc_coord();
+draw_sym_mates();
+//draw_cell();
+
+
+//mol.com = center_of_mass(mol); //calculate the center of mass of initial molecule
+//let com_init = center_of_mass(mol); //calculate the center of mass of initial molecule
+//move_here();
 </script>
 
 <script>

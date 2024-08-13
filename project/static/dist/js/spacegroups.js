@@ -825,5 +825,4 @@ var spacegroups =
                 ]
             }   
     },
-
 }
