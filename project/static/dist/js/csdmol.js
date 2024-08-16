@@ -1,4 +1,11 @@
-const scaleFactor = 35;
+const scaleFactor = 30;
+
+// Help on what is what
+//mol.mol       ---> original fractional coordinates of one molecule [N x [4]] 
+//mol.coords        ---> coordinates of molecule in abc frame [N x [4]]
+//mol.sym_frac      ---> fractional coordinates of all sym. eq. positions [z x N x [4]]
+//mol.sym_frac_uc   ---> fractional coordinates of all sym. eq. mapped to main unit cell [z x N x [4]]
+//mol.sym_coords    ---> coordinates of all sym.eq. points in abc frame [z x N x [5]] <-- 5th element is the fractional z coordinate used for opacity!
 
 function mol_coords(mol){
     //creates new array mol.coords
@@ -6,7 +13,7 @@ function mol_coords(mol){
     }
 
 function draw_molecule(mol) {
-    let a = mol.coords;
+    let a = mol.coords.map(toPixel);
     d3.select('.svg').selectAll('.mol').data(a)
     .join("circle")
     .attr("cx", a => a[0])
@@ -15,7 +22,7 @@ function draw_molecule(mol) {
     .attr('class', a => 'atom' + a[3] +' mol')
     .attr("r", 22)
     .attr("stroke",'black')
-    .attr("stroke-width",'3')
+    .attr("stroke-width",'2')
     return mol;
     }
 
@@ -41,38 +48,37 @@ function to_main_cell(x) {
     }
 
 function map_to_main_cell() {
-    //Step 2.
     //Maps the array mol.sym_frac array of all symmetry equivalent 
     //positions to the main cell (creates new array mol.sym_frac_uc)
     mol.sym_frac_uc = mol.sym_frac.map(x => [to_main_cell(x[0]), to_main_cell(x[1]), to_main_cell(x[2]), x[3]]);
+    mol.sym_frac_uc = mol.sym_frac_uc.map(projection);
     //return mol;
     }
 
 function calc_uc_coord(){
-    //Step 3.
     //Transform the fractional coordinates of all sym.eq. positions
     //to coordinates in the unit cell frame. 
     //creates new array mol.sym_coords
-    mol.sym_coords = mol.sym_frac_uc.map(x => [a*x[0]*scaleFactor, b*x[1]*scaleFactor,c*x[2]*scaleFactor, x[3]]);
+    mol.sym_coords = mol.sym_frac_uc.map(x => [a*x[0]*scaleFactor, b*x[1]*scaleFactor,c*x[2]*scaleFactor, x[3], x[2]]);
     }
 
 function draw_sym_mates() {
     let a = mol.sym_coords.map(toPixel);
     d3.select('.svg').selectAll('.sym').data(a)
     .join("circle")
-    .attr("cx", function(a) { return  a[0]; })
-    .attr("cy", function(a) { return  a[1]; })
+    .attr("cx", a => a[0])
+    .attr("cy", a => a[1])
     .attr('class', function(a) { return 'atom' + a[3] + ' sym' })
-    .attr('opacity', a=> a[2]/(scaleFactor*10))
+    .attr('opacity', a=> a[4])
     .attr("r", 22)
     return mol;
     }
 
 function expand_unit_cells(){
-    //
+    //expand to more than one unit cell
     var shift1 = mol.sym_frac_uc.map(x => [x[0]+1,x[1],x[2],x[3]]);
-    var shift2 = mol.sym_frac_uc.map(x => [x[0]+1,x[1]+1,x[2],x[3]]);
     mol.sym_frac_uc = mol.sym_frac_uc.concat(shift1);
+    var shift2 = mol.sym_frac_uc.map(x => [x[0],x[1]+1,x[2],x[3]]);
     mol.sym_frac_uc = mol.sym_frac_uc.concat(shift2);
     calc_uc_coord();
     draw_sym_mates();
@@ -139,7 +145,7 @@ function toPixel(p) {
       var xfrac = p[0], yfrac = p[1];
       var x = (xfrac + Math.cos(gammar)*yfrac);
       var y = Math.sin(gammar)*yfrac;
-      return [x,y,p[2],p[3]];
+      return [x,y,p[2],p[3],p[4]];
     }
 
 function d2r(angle) {
@@ -150,15 +156,15 @@ function projection(p,cell) {
     // Calculates the xy projection of the 3D point p(x,y,z) 
     // given in fractional coordinates
     // Returns [xp,yp, d] where d is the distance from the plane
-    let x = p[0], y = p[1], z = p[2];
+    let x = p[0], y = p[1], z = p[2], t = p[3];
     //let a, b, c, alphar, betar, gammar = cell[0], cell[1], cell[2], d2r(cell[3]), d2r(cell[4]), d2r(cell[5]); 
-    let xp = x + (z*c)/(a*Math.sin(gammar)**2)*(Math.cos(betar)-Math.cos(gammar)*Math.cos(alpha));
+    let xp = x + (z*c)/(a*Math.sin(gammar)**2)*(Math.cos(betar)-Math.cos(gammar)*Math.cos(alphar));
     let yp = y + (z*c)/(b*Math.sin(gammar)**2)*(Math.cos(alphar)-Math.cos(gammar)*Math.cos(betar));
-    return [xp,yp];
+    return [xp,yp,z,t];
     }
 
 function draw_cell() { 
-    let coords = [[a,b,0,''],[2*a,b,0,''],[a,2*b,0,'']].map(toPixel);
+    let coords = [[5,5,0,''],[a+5,5,0,''],[5,b+5,0,'']].map(toPixel);
     coords = coords.map(a => [a[0]*scaleFactor, a[1]*scaleFactor, a[2]*scaleFactor, '']);
     d3.selectAll('.cell').remove();
     svg.append('line')
