@@ -1,5 +1,5 @@
 /* Taken and adapted from https://jmol.sourceforge.net/jscolors/#Jmolcolors */
-.sym { opacity: 0.8; }
+/*.sym { opacity: 0.8; }*/
 .atomH {fill: #FFFFFF;}
 .atomHe {fill: #D9FFFF;}
 .atomLi {fill: #CC80FF;}

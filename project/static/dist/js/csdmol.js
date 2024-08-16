@@ -63,16 +63,19 @@ function draw_sym_mates() {
     .attr("cx", function(a) { return  a[0]; })
     .attr("cy", function(a) { return  a[1]; })
     .attr('class', function(a) { return 'atom' + a[3] + ' sym' })
+    .attr('opacity', a=> a[2]/(scaleFactor*10))
     .attr("r", 22)
     return mol;
     }
 
 function expand_unit_cells(){
-        mol.sym_frac_uc = mol.sym_frac_uc.concat(mol.sym_frac_uc.map(x => [x[0]+1,x[1],x[2],x[3]]));
-        mol.sym_frac_uc = mol.sym_frac_uc.concat(mol.sym_frac_uc.map(x => [x[0],x[1]+1,x[2],x[3]]));
-        mol.sym_frac_uc = mol.sym_frac_uc.concat(mol.sym_frac_uc.map(x => [x[0]+1,x[1]+1,x[2],x[3]]));
-        calc_uc_coord();
-        draw_sym_mates();
+    //
+    var shift1 = mol.sym_frac_uc.map(x => [x[0]+1,x[1],x[2],x[3]]);
+    var shift2 = mol.sym_frac_uc.map(x => [x[0]+1,x[1]+1,x[2],x[3]]);
+    mol.sym_frac_uc = mol.sym_frac_uc.concat(shift1);
+    mol.sym_frac_uc = mol.sym_frac_uc.concat(shift2);
+    calc_uc_coord();
+    draw_sym_mates();
     }
 
 function center_of_mass(mol) {
@@ -155,7 +158,8 @@ function projection(p,cell) {
     }
 
 function draw_cell() { 
-    let coords = [[a,b],[2*a,b],[a,2*b]].map((aa) => toPixel(aa[0],aa[1]));
+    let coords = [[a,b,0,''],[2*a,b,0,''],[a,2*b,0,'']].map(toPixel);
+    coords = coords.map(a => [a[0]*scaleFactor, a[1]*scaleFactor, a[2]*scaleFactor, '']);
     d3.selectAll('.cell').remove();
     svg.append('line')
             .style("stroke", "blue")
