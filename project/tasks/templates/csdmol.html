@@ -21,7 +21,7 @@
             <div class="col-md-10">
                 <h1>Find the right molecular packing (CSDMOL)</h1>
                 <h1>{{csd_id}} in space group: <em>{{ sg }}</em></h1>
-                <h3><em>a</em>: {{molecule.uc.0|floatformat:3}}, <em>b</em>: {{molecule.uc.1|floatformat:3}}, <em>c</em>: {{molecule.uc.2|floatformat:3}}, <em>&alpha;</em>: {{molecule.uc.3|floatformat:3}}, <em>&beta;</em>: {{molecule.uc.4|floatformat:3}}, <em>&gamma;</em>: {{molecule.uc.5|floatformat:3}}</h3>
+                <h3><em style="color:blue;">a</em>: {{molecule.uc.0|floatformat:3}}, <em style="color:blue;">b</em>: {{molecule.uc.1|floatformat:3}}, <em style="color:blue;">c</em>: {{molecule.uc.2|floatformat:3}}, <em style="color:blue;">&alpha;</em>: {{molecule.uc.3|floatformat:3}}, <em style="color:blue;">&beta;</em>: {{molecule.uc.4|floatformat:3}}, <em style="color:blue;">&gamma;</em>: {{molecule.uc.5|floatformat:3}}</h3>
                     <a href="{%url 'csdmol'%}"><button class="btn btn-danger btn-lg"><i class="fa fa-flask"></i> new</button></a>
                     <button id="plus_x" class="btn btn-info btn-lg">+x</button>
                     <button id="minus_x" class="btn btn-info btn-lg">-x</button>

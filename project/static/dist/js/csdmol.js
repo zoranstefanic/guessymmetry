@@ -60,6 +60,7 @@ function calc_uc_coord(){
     //to coordinates in the unit cell frame. 
     //creates new array mol.sym_coords
     mol.sym_coords = mol.sym_frac_uc.map(x => [a*x[0]*scaleFactor, b*x[1]*scaleFactor,c*x[2]*scaleFactor, x[3], x[2]]);
+    mol.sym_coords.sort( function (a,b) {return a[4]-b[4];} ); // sort by z coordinate 
     }
 
 function draw_sym_mates() {
@@ -69,7 +70,7 @@ function draw_sym_mates() {
     .attr("cx", a => a[0])
     .attr("cy", a => a[1])
     .attr('class', function(a) { return 'atom' + a[3] + ' sym' })
-    .attr('opacity', a=> a[4])
+    .attr('opacity', a => a[4])
     .attr("r", 22)
     return mol;
     }
