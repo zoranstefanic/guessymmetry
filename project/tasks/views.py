@@ -121,6 +121,7 @@ def csdmol(request, csd_id=None):
         return render(request, 'csdmol.html', { 
                 'molecule': molecule,
                 'space_groups':space_groups,
+                'sg':molecule['sg'],
                 'csd_id': csd_id,
                 })
 
