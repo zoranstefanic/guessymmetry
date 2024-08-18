@@ -14,7 +14,7 @@ function mol_coords(mol){
 
 function draw_molecule(mol) {
     let a = mol.coords.map(toPixel);
-    d3.select('.svg').selectAll('.mol').data(a)
+    d3.select('.svg-xy').selectAll('.mol').data(a)
     .join("circle")
     .attr("cx", a => a[0])
     .attr("cy", a => a[1])
@@ -64,7 +64,7 @@ function calc_uc_coord(){
 
 function draw_sym_mates() {
     let a = mol.sym_coords.map(toPixel);
-    d3.select('.svg').selectAll('.sym').data(a)
+    d3.select('.svg-xz').selectAll('.sym').data(a)
     .join("circle")
     .attr("cx", a => a[0])
     .attr("cy", a => a[1])

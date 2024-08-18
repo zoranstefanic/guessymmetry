@@ -45,8 +45,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12"><svg class="svg"></svg></div>
-            <h3><a href="https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{chebi_id}}" target="blank">{{chebi_id}}</a></h3>
+            <div class="col-md-4"><h3>projection <em>xy</em></h3><svg class="svg-xy"></svg></div>
+            <div class="col-md-4"><h3>projection <em>xz</em></h3><svg class="svg-xz"></svg></div>
+            <div class="col-md-4"><h3>projection <em>yz</em></h3><svg class="svg-yz"></svg></div>
         </div>
     </div>
 </div>
@@ -58,7 +59,7 @@ let space_group = mol['sg'];
 let cell = mol['uc'];
 let a = cell[0], b = cell[1], c = cell[2], alphar = d2r(cell[3]), betar = d2r(cell[4]), gammar =  d2r(cell[5]);
 //console.log(mol);
-var svg = d3.select('.svg');
+var svg = d3.select('.svg-xy');
 
 //One molecule coordinates with respect to unit cell coordinate system
 mol_coords(mol);

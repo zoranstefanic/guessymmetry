@@ -1,7 +1,22 @@
-.svg {
+.svg-xy {
+    padding: 1px;
     width: 100%;
-	height: 800px;
-	border: 1px solid grey;
+	height: 600px;
+	border: 1px solid black;
+}
+
+.svg-xz {
+    padding: 1px;
+    width: 100%;
+	height: 600px;
+	border: 1px solid black;
+}
+
+.svg-yz {
+    padding: 1px;
+    width: 100%;
+	height: 600px;
+	border: 1px solid black;
 }
 
 .click-circle {
