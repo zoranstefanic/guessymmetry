@@ -42,6 +42,7 @@
             <div class="col-md-12">
                 <div class="btn-group">
                 <button id="doit" class="btn btn-info btn-lg"><i class="fa fa-bolt"></i> Expand x!</button>
+                <button id="move" class="btn btn-info btn-lg"><i class="fa fa-arrow-right"></i>Move!</button>
                 </div>
             </div>
         </div>
@@ -62,23 +63,33 @@ let a = cell[0], b = cell[1], c = cell[2], alphar = d2r(cell[3]), betar = d2r(ce
 //console.log(mol);
 var svg = d3.select('.svg-xy');
 
-//One molecule coordinates with respect to unit cell coordinate system
-mol_coords(mol);
-//Initially draw the one molecule in the asymmetric unit
-draw_molecule(mol);
-create_sym_frac(mol,space_group);
-map_to_main_cell();
-calc_uc_coord();
-draw_sym_mates();
-draw_cell();
 
 function doit() {
     expand_unit_cells();
-}
+    }
 
-//mol.com = center_of_mass(mol); //calculate the center of mass of initial molecule
-//let com_init = center_of_mass(mol); //calculate the center of mass of initial molecule
+function update() {
+    mol_coords(mol);
+    draw_molecule(mol);
+    create_sym_frac(mol,space_group);
+    map_to_main_cell();
+    calc_uc_coord();
+    draw_sym_mates();
+    }
+
+draw_cell();
+update();
+
+mol.com = center_of_mass(mol); //calculate the center of mass of initial molecule
+let com_init = center_of_mass(mol); //calculate the center of mass of initial molecule
 //move_here();
+
+function move() {
+    // Moves the molecule by a random frac. vector
+    var t = [Math.random(), Math.random(),  Math.random()];
+    mol.mol = mol.mol.map( a => [a[0] + t[0], a[1] + t[1], a[2] + t[2], a[3]]);
+    update();
+    };
 </script>
 
 <script>
@@ -116,6 +127,7 @@ $("#minus_x").click(minus_x);
 $("#plus_y").click(plus_y);
 $("#minus_y").click(minus_y);
 $("#doit").click(doit);
+$("#move").click(move);
 </script>
 
 {% endblock %}

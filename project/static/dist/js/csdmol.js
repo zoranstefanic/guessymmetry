@@ -65,7 +65,7 @@ function calc_uc_coord(){
 
 function draw_sym_mates() {
     let a = mol.sym_coords.map(toPixel);
-    d3.select('.svg-xz').selectAll('.sym').data(a)
+    d3.select('.svg-xy').selectAll('.sym').data(a)
     .join("circle")
     .attr("cx", a => a[0])
     .attr("cy", a => a[1])
@@ -95,7 +95,7 @@ function center_of_mass(mol) {
 
 function move_here() {
     // Moves the molecule at 
-    d3.select('.svg').on('click', function() {
+    d3.select('.svg-xy').on('click', function() {
         if (d3.event.defaultPrevented) return; // Dragged
         let p = [d3.mouse(this)[0], d3.mouse(this)[1]]; // Mouse click point
         let t = [p[0] - mol.com[0] + com_init[0] ,p[1] - mol.com[1] + com_init[1] ]; // Translation to apply
@@ -106,9 +106,8 @@ function move_here() {
         .style('transform','translate(' + p[0]+'px,' + p[1] +'px)');
         mol.coords = mol.coords.map(pt => [pt[0] + t[0], pt[1] + t[1], pt[2], pt[3]]);
         mol.com = center_of_mass(mol); // Update the center of mass upon translation
-        create_sym_frac(mol,space_group);
-        //draw_sym_mates();
-    });
+        update();
+        });
     }
 
 function toFractional(p) {
