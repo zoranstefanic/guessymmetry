@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block head_title %}{{chebi_id}}{% endblock %}
+{% block head_title %}{{csd_id}}{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" type="text/css" href="/static/css/style.css">
@@ -63,7 +63,6 @@ let a = cell[0], b = cell[1], c = cell[2], alphar = d2r(cell[3]), betar = d2r(ce
 //console.log(mol);
 var svg = d3.select('.svg-xy');
 
-
 function doit() {
     expand_unit_cells();
     }
@@ -75,6 +74,8 @@ function update() {
     map_to_main_cell();
     calc_uc_coord();
     draw_sym_mates();
+    draw_sym_mates_xz();
+    draw_sym_mates_yz();
     }
 
 draw_cell();

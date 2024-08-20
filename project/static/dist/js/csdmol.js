@@ -8,6 +8,7 @@ const scaleFactor = 30;
 //mol.sym_coords    ---> coordinates of all sym.eq. points in abc frame [z x N x [5]] <-- 5th element is the fractional z coordinate used for opacity!
 
 function mol_coords(mol){
+    // 1.
     //creates new array mol.coords
     mol.coords = mol.mol.map(x => [a*x[0]*scaleFactor, b*x[1]*scaleFactor,c*x[2]*scaleFactor, x[3]]);
     }
@@ -71,7 +72,31 @@ function draw_sym_mates() {
     .attr("cy", a => a[1])
     .attr('class', function(a) { return 'atom' + a[3] + ' sym' })
     .attr('opacity', a => a[4])
-    .attr("r", 22)
+    //.attr("r", 22)
+    return mol;
+    }
+
+function draw_sym_mates_xz() {
+    let a = mol.sym_coords.map(toPixel_xz);
+    d3.select('.svg-xz').selectAll('.sym').data(a)
+    .join("circle")
+    .attr("cx", a => a[0])
+    .attr("cy", a => a[1])
+    .attr('class', function(a) { return 'atom' + a[3] + ' sym' })
+    .attr('opacity', a => a[4])
+    //.attr("r", 22)
+    return mol;
+    }
+
+function draw_sym_mates_yz() {
+    let a = mol.sym_coords.map(toPixel_yz);
+    d3.select('.svg-yz').selectAll('.sym').data(a)
+    .join("circle")
+    .attr("cx", a => a[0])
+    .attr("cy", a => a[1])
+    .attr('class', function(a) { return 'atom' + a[3] + ' sym' })
+    .attr('opacity', a => a[4])
+    //.attr("r", 22)
     return mol;
     }
 
@@ -118,34 +143,34 @@ function toFractional(p) {
     return [fractx % 1,fracty % 1]; // x and y in range [0,1] 
     }
 
-function toPixel1(p, proj="001") {
-    // Take array p = [x,y,z,'C'] (in fractional coordinates
-    // and return the point [X,Y,Z,'C'] in pixel coordinates 
-    switch (proj) {
-        case '001': //projection on xy
-            var c1 = p[0], c2 = p[1], ang = gammar;
-        case '010': //projection on xz 
-            var c1 = p[0], c2 = p[2], ang = betar;
-        case '100': //projection on yz
-            var c1 = p[2], c2 = p[1], ang = alphar;
-        }
-    var x = (c1 + Math.cos(ang)*c2);
-    var y = Math.sin(ang)*c2;
-    switch (proj) {
-        case '001': //projection on xy
-            return [x,y,p[2],p[3]];
-        case '010': //projection on xz 
-            return [x,p[1],y,p[3]];
-        case '100': //projection on yz
-            return [p[0],x,y,p[3]];
-        }
+function toPixel(p) {
+    var xfrac = p[0], yfrac = p[1];
+    var x = (xfrac + Math.cos(gammar)*yfrac);
+    var y = Math.sin(gammar)*yfrac;
+    return [x,y,p[2],p[3],p[4]];
     }
 
-function toPixel(p) {
-      var xfrac = p[0], yfrac = p[1];
-      var x = (xfrac + Math.cos(gammar)*yfrac);
-      var y = Math.sin(gammar)*yfrac;
-      return [x,y,p[2],p[3],p[4]];
+function toPixel_xy(p) {
+    // Transforms fractional coordinates from the abc coordinate system
+    // to orthogonal canvas coordinates.
+    var xfrac = p[0], yfrac = p[1];
+    var x = (xfrac + Math.cos(gammar)*yfrac);
+    var y = Math.sin(gammar)*yfrac;
+    return [x,y,p[2],p[3],p[4]];
+    }
+
+function toPixel_xz(p) {
+      var xfrac = p[0], zfrac = p[2];
+      var x = (xfrac + Math.cos(betar)*zfrac);
+      var z = Math.sin(betar)*zfrac;
+      return [x,z,p[1],p[3],p[4]];
+    }
+
+function toPixel_yz(p) {
+      var yfrac = p[1], zfrac = p[2];
+      var y = (yfrac + Math.cos(alphar)*zfrac);
+      var z = Math.sin(alphar)*zfrac;
+      return [z,y,p[0],p[3],p[4]];
     }
 
 function d2r(angle) {
@@ -155,7 +180,7 @@ function d2r(angle) {
 function projection(p,cell) {
     // Calculates the xy projection of the 3D point p(x,y,z) 
     // given in fractional coordinates
-    // Returns [xp,yp, d] where d is the distance from the plane
+    // Returns [xp, yp, d] where d is the distance from the plane
     let x = p[0], y = p[1], z = p[2], t = p[3];
     //let a, b, c, alphar, betar, gammar = cell[0], cell[1], cell[2], d2r(cell[3]), d2r(cell[4]), d2r(cell[5]); 
     let xp = x + (z*c)/(a*Math.sin(gammar)**2)*(Math.cos(betar)-Math.cos(gammar)*Math.cos(alphar));
@@ -163,13 +188,25 @@ function projection(p,cell) {
     return [xp,yp,z,t];
     }
 
+function projection_xz(p,cell) {
+    // Calculates the xz projection of the 3D point p(x,y,z) 
+    // given in fractional coordinates
+    // Returns [xp, zp, d] where d is the distance from the plane
+    let x = p[0], y = p[1], z = p[2], t = p[3];
+    // x y z a b c alpha beta gama ---> 
+    let xp = x + (y*b)/(a*Math.sin(betar)**2)*(Math.cos(gammar)-Math.cos(betar)*Math.cos(alphar));
+    let zp = z + (y*b)/(c*Math.sin(betar)**2)*(Math.cos(alphar)-Math.cos(betar)*Math.cos(gammar));
+    return [xp,zp,y,t];
+    }
+
 function draw_cell() { 
-    let coords = [[5,5,0,''],[a+5,5,0,''],[5,b+5,0,'']].map(toPixel);
-    coords = coords.map(a => [a[0]*scaleFactor, a[1]*scaleFactor, a[2]*scaleFactor, '']);
+    let coords = [[0,0,0,''],[1,0,0,''],[0,1,0,''],].map(toPixel);
+    coords = coords.map(xx => [a*xx[0]*scaleFactor, b*xx[1]*scaleFactor, c*xx[2]*scaleFactor, '']);
+    console.log(coords);
     d3.selectAll('.cell').remove();
     svg.append('line')
             .style("stroke", "blue")
-            .style("stroke-width", 2)
+            .style("stroke-width", 5)
             .attr("x1", coords[0][0])
             .attr("y1", coords[0][1])
             .attr("x2", coords[1][0])
@@ -177,7 +214,7 @@ function draw_cell() {
             .attr('class', 'cell');
     svg.append('line')
             .style("stroke", "red")
-            .style("stroke-width", 2)
+            .style("stroke-width", 5)
             .attr("x1", coords[0][0])
             .attr("y1", coords[0][1])
             .attr("x2", coords[2][0])
