@@ -76,6 +76,21 @@ function draw_sym_mates() {
     return mol;
     }
 
+function draw_sym_mates_xz1(num){
+    // Maybe a better way to generate the symmetry mates
+    // in a double loop? 
+    var numCells = 2;
+    var positions = [];
+	for (i = -1; i <= numCells; i++) {
+		for (j = -1; j <= numCells; j++) {
+                for (p of mol.sym_frac_uc) {
+                    positions.push([p[0] +i, p[1] + j, p[2], p[3]]);
+                }
+            }
+		}
+	return positions;
+    }
+
 function draw_sym_mates_xz() {
     let a = mol.sym_coords.map(toPixel_xz);
     d3.select('.svg-xz').selectAll('.sym').data(a)
