@@ -1,7 +1,7 @@
 const scaleFactor = 30;
 
 // Help on what is what
-//mol.mol       ---> original fractional coordinates of one molecule [N x [4]] 
+//mol.mol           ---> original fractional coordinates of one molecule [N x [4]] 
 //mol.coords        ---> coordinates of molecule in abc frame [N x [4]]
 //mol.sym_frac      ---> fractional coordinates of all sym. eq. positions [z x N x [4]]
 //mol.sym_frac_uc   ---> fractional coordinates of all sym. eq. mapped to main unit cell [z x N x [4]]
@@ -60,9 +60,20 @@ function calc_uc_coord(){
     //Transform the fractional coordinates of all sym.eq. positions
     //to coordinates in the unit cell frame. 
     //creates new array mol.sym_coords
+    var numCells = 2;
+    var positions = [];
+	for (i = -2; i <= numCells; i++) {
+		for (j = -2; j <= numCells; j++) {
+                for (p of mol.sym_frac_uc) {
+                    positions.push([p[0] +i, p[1] + j, p[2], p[3]]);
+                }
+            }
+		}
+    mol.sym_frac_uc = positions;
     mol.sym_coords = mol.sym_frac_uc.map(x => [a*x[0]*scaleFactor, b*x[1]*scaleFactor,c*x[2]*scaleFactor, x[3], x[2]]);
     mol.sym_coords.sort( function (a,b) {return a[4]-b[4];} ); // sort by z coordinate 
     }
+
 
 function draw_sym_mates() {
     let a = mol.sym_coords.map(toPixel);
@@ -74,21 +85,6 @@ function draw_sym_mates() {
     .attr('opacity', a => a[4])
     //.attr("r", 22)
     return mol;
-    }
-
-function draw_sym_mates_xz1(num){
-    // Maybe a better way to generate the symmetry mates
-    // in a double loop? 
-    var numCells = 2;
-    var positions = [];
-	for (i = -1; i <= numCells; i++) {
-		for (j = -1; j <= numCells; j++) {
-                for (p of mol.sym_frac_uc) {
-                    positions.push([p[0] +i, p[1] + j, p[2], p[3]]);
-                }
-            }
-		}
-	return positions;
     }
 
 function draw_sym_mates_xz() {
@@ -248,3 +244,25 @@ function draw_cell() {
             .attr('r',1)
             .attr('class', 'cell');
     }
+
+function move(direction,amount=0.01) {
+    var amount = amount;
+    switch (direction) {
+        case '-x': var t = [-amount,0.0,0.0];
+        case '+x': var t = [amount,0.0,0.0];
+        case '-y': var t = [0.0,-amount,0.0];
+        case '+y': var t = [0.0,amount,0.0];
+        case '-z': var t = [0.0,0.0,-amount];
+        case '+z': var t = [0.0,0.0,amount];
+    }
+    function moved () {
+        mol.mol = mol.mol.map(a => [a[0] + t[0], a[1] + t[1], a[2] + t[2], a[3]]);
+        update();
+    }
+    return moved; 
+    };
+
+function what_is_the_answer(event) {
+                var right_answer = $('#right_answer').text();
+                $('#click_result').html("<h2 style='color:green'>"+space_group+"</h2>");
+                };

@@ -23,12 +23,6 @@
                 <h1>{{csd_id}} in space group: <em>{{ sg }}</em></h1>
                 <h3><em style="color:blue;">a</em>: {{molecule.uc.0|floatformat:3}}, <em style="color:blue;">b</em>: {{molecule.uc.1|floatformat:3}}, <em style="color:blue;">c</em>: {{molecule.uc.2|floatformat:3}}, <em style="color:blue;">&alpha;</em>: {{molecule.uc.3|floatformat:3}}, <em style="color:blue;">&beta;</em>: {{molecule.uc.4|floatformat:3}}, <em style="color:blue;">&gamma;</em>: {{molecule.uc.5|floatformat:3}}</h3>
                     <a href="{%url 'csdmol'%}"><button class="btn btn-danger btn-lg"><i class="fa fa-flask"></i> new</button></a>
-                    <button id="plus_x" class="btn btn-info btn-lg">+x</button>
-                    <button id="minus_x" class="btn btn-info btn-lg">-x</button>
-                    <button id="plus_y" class="btn btn-info btn-lg">+y</button>
-                    <button id="minus_y" class="btn btn-info btn-lg">-y</button>
-                    <button id="rotate-left" class="btn btn-info btn-lg"><i class="fa fa-rotate-left"></i> left</button>
-                    <button id="rotate-right" class="btn btn-info btn-lg"><i class="fa fa-rotate-right"></i> right</button>
                 </p>
             </div>
             <div class="col-md-2" style="margin-top:20px;">
@@ -39,17 +33,24 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <div class="btn-group">
-                <button id="doit" class="btn btn-info btn-lg"><i class="fa fa-bolt"></i> Expand x!</button>
-                <button id="move" class="btn btn-info btn-lg"><i class="fa fa-arrow-right"></i>Move!</button>
-                </div>
+            <div class="col-md-4">
+                    <button id="minus_x" class="btn btn-info btn-lg">-x</button>
+                    <button id="plus_x" class="btn btn-info btn-lg">+x</button>
+                    <h3>projection <em>xy</em></h3>
+                    <svg class="svg-xy"></svg>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4"><h3>projection <em>xy</em></h3><svg class="svg-xy"></svg></div>
-            <div class="col-md-4"><h3>projection <em>xz</em></h3><svg class="svg-xz"></svg></div>
-            <div class="col-md-4"><h3>projection <em>yz</em></h3><svg class="svg-yz"></svg></div>
+            <div class="col-md-4">
+                    <button id="minus_y" class="btn btn-info btn-lg">-y</button>
+                    <button id="plus_y" class="btn btn-info btn-lg">+y</button>
+                    <h3>projection <em>xz</em></h3>
+                    <svg class="svg-xz"></svg>
+            </div>
+            <div class="col-md-4">
+                    <button id="minus_z" class="btn btn-info btn-lg">-z</button>
+                    <button id="plus_z" class="btn btn-info btn-lg">+z</button>
+                    <h3>projection <em>yz</em></h3>
+                    <svg class="svg-yz"></svg>
+            </div>
         </div>
     </div>
 </div>
@@ -62,10 +63,6 @@ let cell = mol['uc'];
 let a = cell[0], b = cell[1], c = cell[2], alphar = d2r(cell[3]), betar = d2r(cell[4]), gammar =  d2r(cell[5]);
 //console.log(mol);
 var svg = d3.select('.svg-xy');
-
-function doit() {
-    expand_unit_cells();
-    }
 
 function update() {
     mol_coords(mol);
@@ -83,14 +80,6 @@ update();
 
 mol.com = center_of_mass(mol); //calculate the center of mass of initial molecule
 let com_init = center_of_mass(mol); //calculate the center of mass of initial molecule
-//move_here();
-
-function move() {
-    // Moves the molecule by a random frac. vector
-    var t = [Math.random(), Math.random(),  Math.random()];
-    mol.mol = mol.mol.map( a => [a[0] + t[0], a[1] + t[1], a[2] + t[2], a[3]]);
-    update();
-    };
 </script>
 
 <script>
@@ -118,17 +107,12 @@ $(document).ready(function() {
             return false; //This does not reload the page
        });
 });
-function what_is_the_answer(event) {
-                var right_answer = $('#right_answer').text();
-                $('#click_result').html("<h2 style='color:green'>"+space_group+"</h2>");
-                };
-$("#what_answer").click(what_is_the_answer);
-$("#plus_x").click(plus_x);
-$("#minus_x").click(minus_x);
-$("#plus_y").click(plus_y);
-$("#minus_y").click(minus_y);
-$("#doit").click(doit);
-$("#move").click(move);
+$("#plus_x").click(move('+x',amount=0.01));
+$("#minus_x").click(move('-x'));
+$("#plus_y").click(move('+y'));
+$("#minus_y").click(move('-y'));
+$("#plus_z").click(move('+z'));
+$("#minus_z").click(move('-z'));
 </script>
 
 {% endblock %}
