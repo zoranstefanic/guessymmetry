@@ -70,7 +70,7 @@ function update() {
     create_sym_frac(mol,space_group);
     map_to_main_cell();
     calc_uc_coord();
-    draw_sym_mates();
+    draw_sym_mates_xy();
     draw_sym_mates_xz();
     draw_sym_mates_yz();
     }
@@ -83,36 +83,36 @@ let com_init = center_of_mass(mol); //calculate the center of mass of initial mo
 </script>
 
 <script>
-$(document).ready(function() {
-       $(".click_answer").click(function(event){
-            var answer = $(this).attr('id');
-            change_pg(answer);
-            var right_answer = $('#right_answer').text();
-            return false; //This does not reload the page
-       });
-       $("#submit").click(function(event){
-            $.ajax({
-                 type:"POST",
-                 url:"/packmol/",
-                 data: {
-                        'mol': mol.coords.toString(),
-                        'cell': '['+ a +','+b+','+gamma+']',
-                        'chebi_id': chebi_id,
-                        'group': space_group,
-                        },
-                 success: function(){
-                     $('#submit_answer').html("<h2>Success!</h2>") 
-                 }  
-            });
-            return false; //This does not reload the page
-       });
-});
-$("#plus_x").click(move('+x',amount=0.01));
-$("#minus_x").click(move('-x'));
-$("#plus_y").click(move('+y'));
-$("#minus_y").click(move('-y'));
-$("#plus_z").click(move('+z'));
-$("#minus_z").click(move('-z'));
+    $(document).ready(function() {
+           $(".click_answer").click(function(event){
+                var answer = $(this).attr('id');
+                change_pg(answer);
+                var right_answer = $('#right_answer').text();
+                return false; //This does not reload the page
+           });
+           $("#submit").click(function(event){
+                $.ajax({
+                     type:"POST",
+                     url:"/packmol/",
+                     data: {
+                            'mol': mol.coords.toString(),
+                            'cell': '['+ a +','+b+','+gamma+']',
+                            'chebi_id': chebi_id,
+                            'group': space_group,
+                            },
+                     success: function(){
+                         $('#submit_answer').html("<h2>Success!</h2>") 
+                     }  
+                });
+                return false; //This does not reload the page
+           });
+    });
+    $("#plus_x").click(move('+x',0.01));
+    $("#minus_x").click(move('-x',-0.01));
+    $("#plus_y").click(move('+y',0.01));
+    $("#minus_y").click(move('-y',-0.01));
+    $("#plus_z").click(move('+z',0.01));
+    $("#minus_z").click(move('-z',-0.01));
 </script>
 
 {% endblock %}

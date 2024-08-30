@@ -14,7 +14,7 @@ function mol_coords(mol){
     }
 
 function draw_molecule(mol) {
-    let a = mol.coords.map(toPixel);
+    let a = mol.coords.map(toPixel_xy);
     d3.select('.svg-xy').selectAll('.mol').data(a)
     .join("circle")
     .attr("cx", a => a[0])
@@ -74,16 +74,14 @@ function calc_uc_coord(){
     mol.sym_coords.sort( function (a,b) {return a[4]-b[4];} ); // sort by z coordinate 
     }
 
-
-function draw_sym_mates() {
-    let a = mol.sym_coords.map(toPixel);
+function draw_sym_mates_xy() {
+    let a = mol.sym_coords.map(toPixel_xy);
     d3.select('.svg-xy').selectAll('.sym').data(a)
     .join("circle")
     .attr("cx", a => a[0])
     .attr("cy", a => a[1])
     .attr('class', function(a) { return 'atom' + a[3] + ' sym' })
     .attr('opacity', a => a[4])
-    //.attr("r", 22)
     return mol;
     }
 
@@ -95,7 +93,6 @@ function draw_sym_mates_xz() {
     .attr("cy", a => a[1])
     .attr('class', function(a) { return 'atom' + a[3] + ' sym' })
     .attr('opacity', a => a[4])
-    //.attr("r", 22)
     return mol;
     }
 
@@ -107,7 +104,6 @@ function draw_sym_mates_yz() {
     .attr("cy", a => a[1])
     .attr('class', function(a) { return 'atom' + a[3] + ' sym' })
     .attr('opacity', a => a[4])
-    //.attr("r", 22)
     return mol;
     }
 
@@ -118,7 +114,7 @@ function expand_unit_cells(){
     var shift2 = mol.sym_frac_uc.map(x => [x[0],x[1]+1,x[2],x[3]]);
     mol.sym_frac_uc = mol.sym_frac_uc.concat(shift2);
     calc_uc_coord();
-    draw_sym_mates();
+    draw_sym_mates_xy();
     }
 
 function center_of_mass(mol) {
@@ -154,34 +150,27 @@ function toFractional(p) {
     return [fractx % 1,fracty % 1]; // x and y in range [0,1] 
     }
 
-function toPixel(p) {
-    var xfrac = p[0], yfrac = p[1];
-    var x = (xfrac + Math.cos(gammar)*yfrac);
-    var y = Math.sin(gammar)*yfrac;
-    return [x,y,p[2],p[3],p[4]];
-    }
-
 function toPixel_xy(p) {
     // Transforms fractional coordinates from the abc coordinate system
     // to orthogonal canvas coordinates.
     var xfrac = p[0], yfrac = p[1];
     var x = (xfrac + Math.cos(gammar)*yfrac);
     var y = Math.sin(gammar)*yfrac;
-    return [x,y,p[2],p[3],p[4]];
+    return [x,y,p[2],p[3],p[2]];
     }
 
 function toPixel_xz(p) {
       var xfrac = p[0], zfrac = p[2];
       var x = (xfrac + Math.cos(betar)*zfrac);
       var z = Math.sin(betar)*zfrac;
-      return [x,z,p[1],p[3],p[4]];
+      return [x,z,p[1],p[3],p[1]];
     }
 
 function toPixel_yz(p) {
       var yfrac = p[1], zfrac = p[2];
       var y = (yfrac + Math.cos(alphar)*zfrac);
       var z = Math.sin(alphar)*zfrac;
-      return [z,y,p[0],p[3],p[4]];
+      return [z,y,p[0],p[3],p[0]];
     }
 
 function d2r(angle) {
@@ -211,7 +200,7 @@ function projection_xz(p,cell) {
     }
 
 function draw_cell() { 
-    let coords = [[0,0,0,''],[1,0,0,''],[0,1,0,''],].map(toPixel);
+    let coords = [[0,0,0,''],[1,0,0,''],[0,1,0,''],].map(toPixel_xy);
     coords = coords.map(xx => [a*xx[0]*scaleFactor, b*xx[1]*scaleFactor, c*xx[2]*scaleFactor, '']);
     console.log(coords);
     d3.selectAll('.cell').remove();
@@ -245,8 +234,7 @@ function draw_cell() {
             .attr('class', 'cell');
     }
 
-function move(direction,amount=0.01) {
-    var amount = amount;
+function move(direction,amount) {
     switch (direction) {
         case '-x': var t = [-amount,0.0,0.0];
         case '+x': var t = [amount,0.0,0.0];
