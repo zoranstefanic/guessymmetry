@@ -1,5 +1,6 @@
 const scaleFactor = 30;
 const moveFactor = 0.05;
+const numCells = 2;
 
 // Help on what is what
 //mol.mol           ---> original fractional coordinates of one molecule [N x [4]] 
@@ -65,7 +66,6 @@ function calc_uc_coord(){
     //Transform the fractional coordinates of all sym.eq. positions
     //to coordinates in the unit cell frame. 
     //creates new array mol.sym_coords
-    var numCells = 1;
     var positions = [];
 	for (i = -1; i <= numCells; i++) {
 		for (j = -1; j <= numCells; j++) {
@@ -137,14 +137,6 @@ function move_here() {
         });
     }
 
-function toFractional(p) {
-    // Returns fractional coordinates of point x,y for a given cell a,b,gammar
-    let x = p[0], y = p[1];
-    let fractx = (1/a)*(x - y/Math.tan(gammar));
-    let fracty = y/Math.sin(gammar)*(1/b);
-    return [fractx % 1,fracty % 1]; // x and y in range [0,1] 
-    }
-
 function toPixel_xy(p) {
     // Transforms fractional coordinates from the abc coordinate system
     // to orthogonal canvas coordinates.
@@ -158,7 +150,7 @@ function toPixel_xz(p) {
     var xfrac = p[0], zfrac = p[2], op = p[4];
     var x = (xfrac + Math.cos(betar)*zfrac);
     var z = Math.sin(betar)*zfrac;
-    return [x,z,op,p[3],op];
+    return [x,z,-p[1],p[3],op];
     }
 
 function toPixel_yz(p) {
@@ -271,6 +263,14 @@ function move(direction) {
     }
     return moved(t);
     };
+
+function toFractional(p) {
+    // Returns fractional coordinates of point x,y for a given cell a,b,gammar
+    let x = p[0], y = p[1];
+    let fractx = (1/a)*(x - y/Math.tan(gammar));
+    let fracty = y/Math.sin(gammar)*(1/b);
+    return [fractx % 1,fracty % 1]; // x and y in range [0,1] 
+    }
 
 function what_is_the_answer(event) {
                 var right_answer = $('#right_answer').text();
