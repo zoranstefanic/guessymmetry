@@ -1,4 +1,5 @@
 const scaleFactor = 30;
+const moveFactor = 0.05;
 
 // Help on what is what
 //mol.mol           ---> original fractional coordinates of one molecule [N x [4]] 
@@ -224,23 +225,56 @@ function draw_cell() {
             .attr('class', 'cell');
     }
 
-function move(direction,amount) {
+function plusx() {
+    mol.mol = mol.mol.map(a => [a[0] + moveFactor,a[1],a[2],a[3]]);
+    update();
+    }
+
+function minusx() {
+    mol.mol = mol.mol.map(a => [a[0] - moveFactor,a[1],a[2],a[3]]);
+    update();
+    }
+
+function plusy() {
+    mol.mol = mol.mol.map(a => [a[0],a[1] + moveFactor,a[2],a[3]]);
+    update();
+    }
+
+function minusy() {
+    mol.mol = mol.mol.map(a => [a[0],a[1] - moveFactor,a[2],a[3]]);
+    update();
+    }
+
+function plusz() {
+    mol.mol = mol.mol.map(a => [a[0],a[1],a[2] + moveFactor,a[3]]);
+    update();
+    }
+
+function minusz() {
+    mol.mol = mol.mol.map(a => [a[0],a[1],a[2] - moveFactor,a[3]]);
+    update();
+    }
+
+/* Keep some obsolete functions for now
+
+function move(direction) {
+    console.log(direction);
+    var amount = 0.01;
+    var t;
     switch (direction) {
-        case '-x': var t = [-amount,0.0,0.0];
-        case '+x': var t = [amount,0.0,0.0];
-        case '-y': var t = [0.0,-amount,0.0];
-        case '+y': var t = [0.0,amount,0.0];
-        case '-z': var t = [0.0,0.0,-amount];
-        case '+z': var t = [0.0,0.0,amount];
+        case '-x': t = [-amount,0.0,0.0];
+        case '+x': t = [amount,0.0,0.0];
+        case '-y': t = [0.0,-amount,0.0];
+        case '+y': t = [0.0,amount,0.0];
+        case '-z': t = [0.0,0.0,-amount];
+        case '+z': t = [0.0,0.0,amount];
     }
-    function moved () {
-        mol.mol = mol.mol.map(a => [a[0] + t[0], a[1] + t[1], a[2] + t[2], a[3]]);
-        update();
-    }
-    return moved; 
+    return moved(t);
     };
 
 function what_is_the_answer(event) {
                 var right_answer = $('#right_answer').text();
                 $('#click_result').html("<h2 style='color:green'>"+space_group+"</h2>");
                 };
+*/
+

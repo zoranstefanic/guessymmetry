@@ -107,12 +107,12 @@ let com_init = center_of_mass(mol); //calculate the center of mass of initial mo
                 return false; //This does not reload the page
            });
     });
-    $("#plus_x").click(move('+x',0.01));
-    $("#minus_x").click(move('-x',-0.01));
-    $("#plus_y").click(move('+y',0.01));
-    $("#minus_y").click(move('-y',-0.01));
-    $("#plus_z").click(move('+z',0.01));
-    $("#minus_z").click(move('-z',-0.01));
+    $("#plus_x").click(plusx);
+    $("#minus_x").click(minusx);
+    $("#plus_y").click(plusy);
+    $("#minus_y").click(minusy);
+    $("#plus_z").click(plusz);
+    $("#minus_z").click(minusz);
 </script>
 
 {% endblock %}
