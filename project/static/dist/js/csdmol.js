@@ -7,6 +7,10 @@ const scaleFactor = 30;
 //mol.sym_frac_uc   ---> fractional coordinates of all sym. eq. mapped to main unit cell [z x N x [4]]
 //mol.sym_coords    ---> coordinates of all sym.eq. points in abc frame [z x N x [5]] <-- 5th element is the fractional z coordinate used for opacity!
 
+function d2r(angle) {
+        return (angle/180)*Math.PI;
+    }
+
 function mol_coords(mol){
     // 1.
     //creates new array mol.coords
@@ -19,7 +23,7 @@ function draw_molecule(mol) {
     .join("circle")
     .attr("cx", a => a[0])
     .attr("cy", a => a[1])
-    .attr("opacity", a => a[2]/scaleFactor)
+    .attr("opacity", a => a[2]/scaleFactor) //!FIXME -> this opacity is not right!
     .attr('class', a => 'atom' + a[3] +' mol')
     .attr("r", 22)
     .attr("stroke",'black')
@@ -52,7 +56,7 @@ function map_to_main_cell() {
     //Maps the array mol.sym_frac array of all symmetry equivalent 
     //positions to the main cell (creates new array mol.sym_frac_uc)
     mol.sym_frac_uc = mol.sym_frac.map(x => [to_main_cell(x[0]), to_main_cell(x[1]), to_main_cell(x[2]), x[3]]);
-    mol.sym_frac_uc = mol.sym_frac_uc.map(projection);
+    mol.sym_frac_uc = mol.sym_frac_uc.map(projection_xy);
     //return mol;
     }
 
@@ -60,12 +64,12 @@ function calc_uc_coord(){
     //Transform the fractional coordinates of all sym.eq. positions
     //to coordinates in the unit cell frame. 
     //creates new array mol.sym_coords
-    var numCells = 2;
+    var numCells = 1;
     var positions = [];
-	for (i = -2; i <= numCells; i++) {
-		for (j = -2; j <= numCells; j++) {
+	for (i = -1; i <= numCells; i++) {
+		for (j = -1; j <= numCells; j++) {
                 for (p of mol.sym_frac_uc) {
-                    positions.push([p[0] +i, p[1] + j, p[2], p[3]]);
+                    positions.push([p[0] + i, p[1] + j, p[2], p[3]]);
                 }
             }
 		}
@@ -107,16 +111,6 @@ function draw_sym_mates_yz() {
     return mol;
     }
 
-function expand_unit_cells(){
-    //expand to more than one unit cell
-    var shift1 = mol.sym_frac_uc.map(x => [x[0]+1,x[1],x[2],x[3]]);
-    mol.sym_frac_uc = mol.sym_frac_uc.concat(shift1);
-    var shift2 = mol.sym_frac_uc.map(x => [x[0],x[1]+1,x[2],x[3]]);
-    mol.sym_frac_uc = mol.sym_frac_uc.concat(shift2);
-    calc_uc_coord();
-    draw_sym_mates_xy();
-    }
-
 function center_of_mass(mol) {
     let arr = mol.coords;
     let cx = 0, cy=0, cz = 0;
@@ -153,31 +147,27 @@ function toFractional(p) {
 function toPixel_xy(p) {
     // Transforms fractional coordinates from the abc coordinate system
     // to orthogonal canvas coordinates.
-    var xfrac = p[0], yfrac = p[1];
+    var xfrac = p[0], yfrac = p[1], op = p[4];
     var x = (xfrac + Math.cos(gammar)*yfrac);
     var y = Math.sin(gammar)*yfrac;
-    return [x,y,p[2],p[3],p[2]];
+    return [x,y,op,p[3],op];
     }
 
 function toPixel_xz(p) {
-      var xfrac = p[0], zfrac = p[2];
-      var x = (xfrac + Math.cos(betar)*zfrac);
-      var z = Math.sin(betar)*zfrac;
-      return [x,z,p[1],p[3],p[1]];
+    var xfrac = p[0], zfrac = p[2], op = p[4];
+    var x = (xfrac + Math.cos(betar)*zfrac);
+    var z = Math.sin(betar)*zfrac;
+    return [x,z,op,p[3],op];
     }
 
 function toPixel_yz(p) {
-      var yfrac = p[1], zfrac = p[2];
-      var y = (yfrac + Math.cos(alphar)*zfrac);
-      var z = Math.sin(alphar)*zfrac;
-      return [z,y,p[0],p[3],p[0]];
+    var yfrac = p[1], zfrac = p[2], op = p[4];
+    var y = (yfrac + Math.cos(alphar)*zfrac);
+    var z = Math.sin(alphar)*zfrac;
+    return [z,y,op,p[3],op];
     }
 
-function d2r(angle) {
-        return (angle/180)*Math.PI;
-    }
-
-function projection(p,cell) {
+function projection_xy(p,cell) {
     // Calculates the xy projection of the 3D point p(x,y,z) 
     // given in fractional coordinates
     // Returns [xp, yp, d] where d is the distance from the plane
