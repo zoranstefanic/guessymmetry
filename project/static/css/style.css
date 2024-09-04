@@ -1,13 +1,23 @@
-.svg {
+.svg-xy {
+    overflow: scroll;
+    padding:10px;
     width: 100%;
-	height: 200px;
-	border: 1px solid grey;
+	height: 600px;
+	border: 1px solid black;
 }
 
-.svg_main {
+.svg-xz {
+    padding: 1px;
     width: 100%;
-	height: 200px;
-	border: 1px solid blue;
+	height: 600px;
+	border: 1px solid black;
+}
+
+.svg-yz {
+    padding: 1px;
+    width: 100%;
+	height: 600px;
+	border: 1px solid black;
 }
 
 .click-circle {
