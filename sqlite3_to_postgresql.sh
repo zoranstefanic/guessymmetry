@@ -1,6 +1,7 @@
 #!/bin/bash 
 # Transfer data from sqlite3 to postgresql database on the server
 # https://hevodata.com/learn/sqlite-to-postgresql/
+# This worked on 3.9.2024. so the database was changed to PostgreSQL 
 
 # First dump the sqlite3 database
 ./manage.py dumpdata > db.sqlite3.json
@@ -17,7 +18,11 @@ python manage.py migrate
 pip install psycopg2
 pip install --upgrade pip
 
+# In the shell remove all ContentTypes 
+# python manage.py shell
+# from django.contrib.contenttypes.models import ContentType
+# ContentType.objects.all().delete()
+
 # Finally load the data that was dumped
 ./manage.py loaddata db.sqlite3.json 
 
-#This worked on 3.9.2024. so the database was changed to PostgreSQL 

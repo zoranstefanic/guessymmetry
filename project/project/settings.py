@@ -151,6 +151,6 @@ ACCOUNT_LOGOUT_REDIRECT_URL = "home"
 ACCOUNT_OPEN_SIGNUP = True
 
 try:
-    from local_settings import *
+    from project.local_settings import *
 except ImportError:
     pass
