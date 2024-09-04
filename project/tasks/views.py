@@ -116,7 +116,8 @@ def csdmol(request, csd_id=None):
         molecules = json.load(open(BASE_DIR/'ccdc/molecules.json','r'))
         if not csd_id:
             csd_id = choice(list(molecules.keys()))
-            #csd_id = "ADIPEJ"
+        else:
+            csd_id = molecules[csd_id]
         molecule = molecules.get(csd_id)
         return render(request, 'csdmol.html', { 
                 'molecule': molecule,
