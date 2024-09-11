@@ -42,3 +42,10 @@
 .red {
 background-color: red;
 }
+
+.intro {
+    background-color: #eee;
+    padding:10px;
+    border-radius:20px;
+    color: grey;
+}
