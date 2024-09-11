@@ -9,6 +9,7 @@ from project.settings import BASE_DIR
 from ccdc.space_groups import space_groups
 import pickle
 import json
+import tasks.receivers
 
 NUMBER_OF_GAMES = 10
 
