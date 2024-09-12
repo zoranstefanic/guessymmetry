@@ -3,10 +3,28 @@
 
 <ul class="nav navbar-nav pull-right" >
     {% if request.user.is_authenticated %}
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                Symmetry 
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li> <a href="{% url 'task1' %}"><button class="btn btn-success">Symmetry</button></a> </li>
+                <li> <a class="navbar-item" href="{% url 'scoreboard' %}"><i class="fa fa-trophy"> Scoreboard</i></a> </li>
+            </div>
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+                Symmetry 
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li> <a href="{% url 'task1' %}"><button class="btn btn-success">Symmetry</button></a> </li>
+                <li> <a class="navbar-item" href="{% url 'scoreboard' %}"><i class="fa fa-trophy"> Scoreboard</i></a> </li>
+            </div>
+        </div>
         <li> <a href="{% url 'task1' %}"><button class="btn btn-success">Symmetry</button></a> </li>
         <li> <a class="navbar-item" href="{% url 'scoreboard' %}"><i class="fa fa-trophy"> Scoreboard</i></a> </li>
         <li> <a href="{% url 'packmol' %}"><button class="btn btn-info">Packmol</button></a> </li>
         <li> <a class="navbar-item" href="{% url 'packmol_scoreboard' %}"><i class="fa fa-trophy"> Packmol scoreboard</i></a> </li>
+        <li> <a href="{% url 'csdmol' %}"><button style="background-color:hotpink;border:none;" class="btn btn-info">Csdmol</button></a> </li>
+        <li> <a class="navbar-item" href="{% url 'packmol_scoreboard' %}"><i class="fa fa-trophy"> Csdmol scoreboard</i></a> </li>
         <p class="navbar-text">
             <i class="fa fa-user"></i> {% user_display request.user %}
         </p>
