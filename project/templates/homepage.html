@@ -27,26 +27,28 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <h1>Learn about symmetry</h1>
-                        <img src="/static/bg1.png" style="width:100%;" alt="">
-                        <p>First you will learn about what kinds of symmetries are even possible in two dimensions. You will be able to draw fascianting 2D atterns.                        </p>
-                        <p style="margin:10px;">
-                             <a href="{% url 'task1' %}"><button class="btn btn-success btn-lg">Explore!</button></a>
+                        <h1 style="color:green;">Learn about symmetry</h1>
+                        <img src="/static/bg_symmetry.png" style="width:100%;height:200px;" alt="">
+                        <p style="margin:10px;font-size:16px;">First you will learn about what kinds of symmetries are even possible in two dimensions. You will be able to draw fascinating 2D patterns. Just by visually recognizing the patterns you will be able to recognize all the possible symmetries. To check how well you are doing you can take a chellenge to guess the sequence of symmetries in the least amount of time and compare your results with others!</p>
+                        <p style="margin:auto;">
+                             <a href="{% url 'task1' %}"><button style="background-color:green;border:none;" class="btn btn-success btn-lg">Let's learn symmetry!</button></a>
                         </p>
                     </div>
                     <div class="col-md-4">
-                        <h1>2D molecules packing</h1>
-                        <img src="/static/bg5.png" style="width:100%;" alt="">
+                        <h1 style="color:#5bc0de;">Pack the molecules</h1>
+                        <img src="/static/bg_packmol.png" style="width:100%;height:200px;" alt="">
+                        <p style="margin:10px;font-size:16px;">Then, armed with your knowledge of symmetry, you will be able to pack the molecules in two dimensions. You should be able to recognize the symmetry of the molecule and decide which symmetries are suitable for packing, much like in real crystals. Again you will be able to compare your packings with the packings of the other users in a form of a scoreboard.</p>
                          <p style="margin:10px;">
-                             <a href="{% url 'packmol' %}"><button class="btn btn-info btn-lg">Pack!</button></a>
+                             <a href="{% url 'packmol' %}"><button style="background-color:#5bc0de;border:none;" class="btn btn-info btn-lg">Let's make some 2D crystals!</button></a>
                          </p>
                     </div>
                     <div class="col-md-4">
-                        <h1>Guess the symmetry of molecules from the Cambridge Structural Database</h1>
-                        <img src="/static/csdmol.png" style="width:100%;" alt="">
-                         <p style="margin:10px;">
-                             <a href="{% url 'csdmol' %}"><button class="btn btn-success btn-lg">Guess!</button></a>
-                         </p>
+                        <h1 style="color:hotpink;">Molecules from CSD</h1>
+                        <img src="/static/bg_csdmol.png" style="width:100%;height:200px;" alt="">
+                        <p style="margin:10px;font-size:16px;"><a href="https://www.ccdc.cam.ac.uk/">Cambridge Structural Database (CSD) </a>is the largest collection of experimentally determined crystal structures, containing more than 1.3 million structures! Here, you will finally be able to test your knowledge against the real 3D crystal structures. Your guesses (predictions) will be compared to the ground truth crystal structures from the CSD. May the best guesser win!</p>
+                        <p style="margin:10px;">
+                        <a href="{% url 'csdmol' %}"><button style="background-color:hotpink;border:none;" class="btn btn-info btn-lg">Let's make some 2D crystals!</button></a>
+                        </p>
                     </div>
                 </div>
         </div>
