@@ -1,43 +1,46 @@
-{% load i18n %}
 {% load account_tags %}
 
-<ul class="nav navbar-nav pull-right" >
-    {% if request.user.is_authenticated %}
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-                Symmetry 
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li> <a href="{% url 'task1' %}"><button class="btn btn-success">Symmetry</button></a> </li>
-                <li> <a class="navbar-item" href="{% url 'scoreboard' %}"><i class="fa fa-trophy"> Scoreboard</i></a> </li>
-            </div>
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
-                Symmetry 
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li> <a href="{% url 'task1' %}"><button class="btn btn-success">Symmetry</button></a> </li>
-                <li> <a class="navbar-item" href="{% url 'scoreboard' %}"><i class="fa fa-trophy"> Scoreboard</i></a> </li>
-            </div>
-        </div>
-        <li> <a href="{% url 'task1' %}"><button class="btn btn-success">Symmetry</button></a> </li>
-        <li> <a class="navbar-item" href="{% url 'scoreboard' %}"><i class="fa fa-trophy"> Scoreboard</i></a> </li>
-        <li> <a href="{% url 'packmol' %}"><button class="btn btn-info">Packmol</button></a> </li>
-        <li> <a class="navbar-item" href="{% url 'packmol_scoreboard' %}"><i class="fa fa-trophy"> Packmol scoreboard</i></a> </li>
-        <li> <a href="{% url 'csdmol' %}"><button style="background-color:hotpink;border:none;" class="btn btn-info">Csdmol</button></a> </li>
-        <li> <a class="navbar-item" href="{% url 'packmol_scoreboard' %}"><i class="fa fa-trophy"> Csdmol scoreboard</i></a> </li>
-        <p class="navbar-text">
-            <i class="fa fa-user"></i> {% user_display request.user %}
-        </p>
-        <li>
-            <a id="account_logout" href="{% url 'account_logout' %}"><i class="fa fa-power-off"></i> {% trans "Log out" %}</a>
-        </li>
-    {% else %}
-        <li><a href="{% url 'account_login' %}">{% trans "Log in" %}</a></li>
-        {% if ACCOUNT_OPEN_SIGNUP %}
-            <li><a href="{% url 'account_signup' %}">{% trans "Sign up" %}</a></li>
+<div id="navbar" class="navbar-collapse collapse pull-right">
+    <ul class="nav navbar-nav">
+        {% if request.user.is_authenticated %}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><button style="background-color:green;border:none;color:white;" class="btn">Symmetry <span class="caret"></span></button></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'task1' %}">Explore 2D symmetry</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li> <a class="navbar-item" href="{% url 'scoreboard' %}"><i class="fa fa-trophy"> Symmetry scoreboard</i></a> </li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><button style="background-color:#5bc0de;border:none;color:white;" class="btn">Packmol <span class="caret"></span></button></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'packmol' %}">Pack 2D molecules</a> </li>
+                    <li role="separator" class="divider"></li>
+                    <li><a class="navbar-item" href="{% url 'packmol_scoreboard' %}"><i class="fa fa-trophy"> Packmol scoreboard</i></a> </li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"><button style="background-color:hotpink;border:none;color:white;" class="btn">CSDmol <span class="caret"></span></button></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'csdmol' %}"> Pack real 3D molecules</a> </li>
+                    <li role="separator" class="divider"></li>
+                    <li><a class="navbar-item" href="{% url 'packmol_scoreboard' %}"><i class="fa fa-trophy"> Csdmol scoreboard</i></a> </li>
+                </ul>
+            </li>
         {% endif %}
-    {% endif %}
-</ul>
+        <li class="dropdown">
+            {% if request.user.is_authenticated %}
+                <p class="navbar-text"> <i class="fa fa-user"></i> {% user_display request.user %} </p>
+                <li> <a id="account_logout" href="{% url 'account_logout' %}"><i class="fa fa-power-off"></i>Log out</a> </li>
+            {% else %}
+                <li><a href="{% url 'account_login' %}">Log in</a></li>
+                {% if ACCOUNT_OPEN_SIGNUP %}
+                    <li><a href="{% url 'account_signup' %}">Sign up</a></li>
+                {% endif %}
+            {% endif %}
+        </li>
+    </ul>
+</div>
 
 <form id="accountLogOutForm" style="display: none;" action="{% url 'account_logout' %}" method="POST">
     {% csrf_token %}

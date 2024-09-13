@@ -1,24 +1,19 @@
-{% extends "theme_bootstrap/base.html" %}
+{% extends "base.html" %}
 
 {% load static %}
 {% load pinax_webanalytics_tags %}
-{% load i18n %}
-
 
 {% block styles %}
     {% include "_styles.html" %}
 {% endblock %}
 
-
 {% block extra_head_base %}
     {% block extra_head %}{% endblock %}
 {% endblock %}
 
-
 {% block footer %}
     {% include "_footer.html" %}
 {% endblock %}
-
 
 {% block scripts %}
     {% include "_scripts.html" %}
