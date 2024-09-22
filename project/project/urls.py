@@ -20,7 +20,6 @@ from django.conf.urls.static import static
 from home import views
 from tasks.views import *
 
-
 urlpatterns = [
     path('', views.homepage, name="home"),
     path('elena/', views.elena, name="elena"),

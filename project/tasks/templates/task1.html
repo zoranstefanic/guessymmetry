@@ -18,11 +18,16 @@
         <div id="right_answer" class="hidden">{{group}}</div>
         <div class="row">
             <div class="col-md-8">
-                <h1>Guess the group (practice)</h1>
-                <p>In this challenge you need to recognize the symmetry of the 2D pattern, in other words to indicate to which plane group the pattern belongs. 
-                <ul class="list-unstyled">
-                    <li>Click anywhere on the drawing canvas below and the circles will appear in the symmetry positions of that point. </li>
+                <h1>Explore 2D symmetry (practice)</h1>
+                <p style="font-size:14px;">
+                    Did you know that there are "only" seventeen ways in which you can periodically arrange
+                    objects in two dimensions? These are characterized by so-called <b>plane
+                    groups</b>, ranging from the least symmetric <button class="btn btn-info">p1</button> which has no symmetry elements other than translations, to the most symmetric <button class="btn btn-info">p6mm</button>. Here you can first practice recognizing different plane groups by moving coloured circles around. 
+                </p>
+                <ul style="font-size:14px;">
+                    <li>Click anywhere on the drawing canvas below and the circles will appear in the symmetry positions of that point. By clicking anywhere on the white area you can create as many circles as you wish. You can even create beautiful symmetric patterns.</li>
                     <li>You may drag the circles around to more easily recognize the symmetry.</li>
+                    <li>If you think you recognize the symmetry (plane group) click the label above the canvas, and see if you were right.</li>
                     <li>When you think you have practiced enough click on "Play for real!"</li>
                     <li><a href="{%url 'task1'%}"><button class="btn btn-warning btn-lg">Reload</button></a><a class="pull-right" href="{%url 'task1replay'%}"><button class="btn btn-danger btn-lg">Play for real!</button></a></li>
                 </ul>

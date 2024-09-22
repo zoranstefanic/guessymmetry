@@ -1,11 +1,13 @@
 .svg-task1 {
     width: 100%;
 	height:700px;
+    border:1px,solid,grey;
 }
 
 .svg-packmol {
     width: 100%;
 	height:700px;
+    border:1px,solid,grey;
 }
 
 .svg-xy {

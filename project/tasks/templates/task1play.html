@@ -16,14 +16,15 @@
 <div class="container">
         <div class="row">
             <div class="col-md-8">
-            <h1>Guess the group</h1>
-            <p>
-            In this challenge you need to recognize the symmetry of the 2D pattern, in other words to indicate to which plane group the pattern belongs. 
-            <ul>
-                <li>Click anywhere on the drawing canvas below and the circles will appear in the symmetry positions of that point. </li>
-                <li>You may drag the circles around to more easily recognize the symmetry.</li>
-                <li>When you are sure what the plane group is, click on the label to the right and earn a point.</li>
-            </ul>
+            <h1>Explore 2D symmetry (play!).</h1>
+            <p> 
+                Check how quickly can you recognize 10 plane groups! The person with the fastest time finishes on the <a href="{% url 'scoreboard' %}"><button class="btn btn-info">Scoreboard</button></a>.  
+
+                <ul class="list-unstyled" style="font-size:14px;">
+                    <li>Click anywhere on the drawing canvas below and the circles will appear in the symmetry positions of that point. By clicking anywhere on the white area you can create as many circles as you wish. You can even create beautiful symmetric patterns.</li>
+                    <li><a href="{%url 'task1'%}"><button class="btn btn-warning btn-lg">Reload</button></a><a class="pull-right" href="{%url 'task1replay'%}"><button class="btn btn-danger btn-lg">Play for real!</button></a></li>
+                </ul>
+
             </p>
             </div>
         <div class="col-md-4" style="margin-top:20px;">
