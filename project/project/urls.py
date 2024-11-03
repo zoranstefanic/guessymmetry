@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from home import views
 from tasks.views import *
@@ -32,7 +32,7 @@ urlpatterns = [
     path("task1replay/", task1replay, name="task1replay"),
     path("packmol/<str:chebi>/", packmol, name="packmolchebi"),
     path("packmol/", packmol, name="packmol"),
-    path("csdmol/", csdmol, name="csdmol"),
+    re_path("csdmol/(?P<csd_id>\w+)?", csdmol, name="csdmol"),
     path("packmol_view/<int:id>/", packmol_view, name="packmol_view"),
     path("packmol_scoreboard/", packmol_scoreboard, name="packmol_scoreboard"),
     path("scoreboard/", scoreboard, name="scoreboard"),

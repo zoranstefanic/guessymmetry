@@ -1,6 +1,6 @@
 const scaleFactor = 30;
 const moveFactor = 0.05;
-const numCells = 2;
+const numCells = 1;
 
 // Help on what is what
 //mol.mol           ---> original fractional coordinates of one molecule [N x [4]] 
@@ -14,7 +14,6 @@ function d2r(angle) {
     }
 
 function mol_coords(mol){
-    // 1.
     //creates new array mol.coords
     mol.coords = mol.mol.map(x => [a*x[0]*scaleFactor, b*x[1]*scaleFactor,c*x[2]*scaleFactor, x[3]]);
     }
@@ -36,10 +35,10 @@ function draw_molecule(mol) {
 function create_sym_frac(mol,space_group) {
     //Takes frac. coordinates of one molecule and 
     //creates mol.sym_frac array of all symmetry equivalent 
-    //positions (not necessarily in the main unit cell!)
+    //positions (not necessarily in the main unit cell)
     mol.sym_frac = [];
     for (p of mol.mol) {
-        let x = p[0], y = p[1], z=p[2], elem = p[3];
+        let x = p[0], y = p[1], z = p[2], elem = p[3];
         let symops = spacegroups[space_group]['symops'](p);	
             for ( k=0; k < symops.length; k++) {       
                mol.sym_frac = mol.sym_frac.concat([symops[k].concat(elem)]);
@@ -67,8 +66,8 @@ function calc_uc_coord(){
     //to coordinates in the unit cell frame. 
     //creates new array mol.sym_coords
     var positions = [];
-	for (i = -1; i <= numCells; i++) {
-		for (j = -1; j <= numCells; j++) {
+	for (i = 0; i <= numCells; i++) {
+		for (j = 0; j <= numCells; j++) {
                 for (p of mol.sym_frac_uc) {
                     positions.push([p[0] + i, p[1] + j, p[2], p[3]]);
                 }
@@ -160,15 +159,17 @@ function toPixel_yz(p) {
     return [z,y,op,p[3],op];
     }
 
-function projection_xy(p,cell) {
+function projection_xy(p) {
     // Calculates the xy projection of the 3D point p(x,y,z) 
     // given in fractional coordinates
-    // Returns [xp, yp, d] where d is the distance from the plane
+    // Returns [xp, yp, zp, type of atom] where zp is the distance from the plane
     let x = p[0], y = p[1], z = p[2], t = p[3];
-    //let a, b, c, alphar, betar, gammar = cell[0], cell[1], cell[2], d2r(cell[3]), d2r(cell[4]), d2r(cell[5]); 
-    let xp = x + (z*c)/(a*Math.sin(gammar)**2)*(Math.cos(betar)-Math.cos(gammar)*Math.cos(alphar));
-    let yp = y + (z*c)/(b*Math.sin(gammar)**2)*(Math.cos(alphar)-Math.cos(gammar)*Math.cos(betar));
-    return [xp,yp,z,t];
+    let r = Math.sqrt((x*a)**2+(y*b)**2+(z*c)**2)
+    let xp = x + ((z*c)/(a*Math.sin(gammar)**2))*(Math.cos(betar)-Math.cos(gammar)*Math.cos(alphar));
+    let yp = y + ((z*c)/(b*Math.sin(gammar)**2))*(Math.cos(alphar)-Math.cos(gammar)*Math.cos(betar));
+    //let zp = r*a*b*Math.sin(gammar)/V 
+    let zp = Math.sqrt(r**2-(xp*a)**2-(yp*b)**2-2*xp*yp*Math.cos(gammar)*a*b)
+    return [xp,yp,zp,t];
     }
 
 function projection_xz(p,cell) {

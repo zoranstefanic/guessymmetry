@@ -25,6 +25,17 @@ var spacegroups =
                 ]
             }   
     }, 
+
+    'P1':
+        {
+        'symops': 
+            function (p) { 
+                var x = p[0], y = p[1], z = p[2];
+                return [
+                    [x,y,z],
+                ]
+            }   
+    }, 
     
 
     'Pbca':

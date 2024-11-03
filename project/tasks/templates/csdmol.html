@@ -18,14 +18,14 @@
     <div class="container">
         <div id="right_answer" class="hidden">{{group}}</div>
         <div class="row">
-            <div class="col-md-10">
-                <h1>Find the right molecular packing (CSDMOL)</h1>
+            <h1>Find the right molecular packing (CSDMOL)</h1>
+            <div class="col-md-8">
+                <img style="width:40%;float:left;margin:10px;filter:opacity(0.5);" src="/static/pngs/{{csd_id}}.png" alt="">
                 <h1>{{csd_id}} in space group: <em>{{ sg }}</em></h1>
                 <h3><em style="color:blue;">a</em>: {{molecule.uc.0|floatformat:3}}, <em style="color:blue;">b</em>: {{molecule.uc.1|floatformat:3}}, <em style="color:blue;">c</em>: {{molecule.uc.2|floatformat:3}}, <em style="color:blue;">&alpha;</em>: {{molecule.uc.3|floatformat:3}}, <em style="color:blue;">&beta;</em>: {{molecule.uc.4|floatformat:3}}, <em style="color:blue;">&gamma;</em>: {{molecule.uc.5|floatformat:3}}</h3>
-                    <a href="{%url 'csdmol'%}"><button class="btn btn-danger btn-lg"><i class="fa fa-flask"></i> new</button></a>
-                </p>
+                <a href="{%url 'csdmol'%}"><button class="btn btn-danger btn-lg"><i class="fa fa-flask"></i> new</button></a>
             </div>
-            <div class="col-md-2" style="margin-top:20px;">
+            <div class="col-md-4" style="margin-top:20px;">
                 <button id="what_answer" class="btn btn-info">Plane group?</button>
                 <button id="submit" class="btn btn-warning">Submit</button>
                 <div id="click_result"><b>{{group}}</b></div>
@@ -61,12 +61,14 @@ let mol = {{molecule|safe}};
 let space_group = mol['sg'];
 let cell = mol['uc'];
 let a = cell[0], b = cell[1], c = cell[2], alphar = d2r(cell[3]), betar = d2r(cell[4]), gammar =  d2r(cell[5]);
-//console.log(mol);
+let V = a*b*c*Math.sqrt(1-Math.cos(alphar)**2 - Math.cos(betar)**2 -Math.cos(gammar)**2 
+                              +2*Math.cos(alphar)*Math.cos(betar)*Math.cos(gammar));
+console.log('Volume',V);
 var svg = d3.select('.svg-xy');
 
 function update() {
     mol_coords(mol);
-//    draw_molecule(mol);
+    //draw_molecule(mol);
     create_sym_frac(mol,space_group);
     map_to_main_cell();
     calc_uc_coord();
